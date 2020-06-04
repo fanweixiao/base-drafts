@@ -7570,7 +7570,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
       reason for closing this connection.  A CONNECTION_CLOSE frame of
       type 0x1c uses codes from the space defined in Section 20.  A
       CONNECTION_CLOSE frame of type 0x1d uses codes from the
-      application protocol error code space; see Section 20.1
+      application protocol error code space; see Section 20.1.
 
    Frame Type:  A variable-length integer encoding the type of frame
       that triggered the error.  A value of 0 (equivalent to the mention
