@@ -144,24 +144,24 @@ Internet-Draft          Using TLS to Secure QUIC               June 2020
      A.2.  Client Initial  . . . . . . . . . . . . . . . . . . . . .  46
      A.3.  Server Initial  . . . . . . . . . . . . . . . . . . . . .  48
      A.4.  Retry . . . . . . . . . . . . . . . . . . . . . . . . . .  49
-   Appendix B.  Change Log . . . . . . . . . . . . . . . . . . . . .  49
-     B.1.  Since draft-ietf-quic-tls-27  . . . . . . . . . . . . . .  49
-     B.2.  Since draft-ietf-quic-tls-26  . . . . . . . . . . . . . .  49
-     B.3.  Since draft-ietf-quic-tls-25  . . . . . . . . . . . . . .  50
-     B.4.  Since draft-ietf-quic-tls-24  . . . . . . . . . . . . . .  50
-     B.5.  Since draft-ietf-quic-tls-23  . . . . . . . . . . . . . .  50
-     B.6.  Since draft-ietf-quic-tls-22  . . . . . . . . . . . . . .  50
-     B.7.  Since draft-ietf-quic-tls-21  . . . . . . . . . . . . . .  50
-     B.8.  Since draft-ietf-quic-tls-20  . . . . . . . . . . . . . .  50
-     B.9.  Since draft-ietf-quic-tls-18  . . . . . . . . . . . . . .  51
-     B.10. Since draft-ietf-quic-tls-17  . . . . . . . . . . . . . .  51
-     B.11. Since draft-ietf-quic-tls-14  . . . . . . . . . . . . . .  51
-     B.12. Since draft-ietf-quic-tls-13  . . . . . . . . . . . . . .  51
-     B.13. Since draft-ietf-quic-tls-12  . . . . . . . . . . . . . .  51
-     B.14. Since draft-ietf-quic-tls-11  . . . . . . . . . . . . . .  52
-     B.15. Since draft-ietf-quic-tls-10  . . . . . . . . . . . . . .  52
-     B.16. Since draft-ietf-quic-tls-09  . . . . . . . . . . . . . .  52
-     B.17. Since draft-ietf-quic-tls-08  . . . . . . . . . . . . . .  52
+     A.5.  ChaCha20-Poly1305 Short Header Packet . . . . . . . . . .  49
+   Appendix B.  Change Log . . . . . . . . . . . . . . . . . . . . .  50
+     B.1.  Since draft-ietf-quic-tls-27  . . . . . . . . . . . . . .  51
+     B.2.  Since draft-ietf-quic-tls-26  . . . . . . . . . . . . . .  51
+     B.3.  Since draft-ietf-quic-tls-25  . . . . . . . . . . . . . .  51
+     B.4.  Since draft-ietf-quic-tls-24  . . . . . . . . . . . . . .  51
+     B.5.  Since draft-ietf-quic-tls-23  . . . . . . . . . . . . . .  51
+     B.6.  Since draft-ietf-quic-tls-22  . . . . . . . . . . . . . .  52
+     B.7.  Since draft-ietf-quic-tls-21  . . . . . . . . . . . . . .  52
+     B.8.  Since draft-ietf-quic-tls-20  . . . . . . . . . . . . . .  52
+     B.9.  Since draft-ietf-quic-tls-18  . . . . . . . . . . . . . .  52
+     B.10. Since draft-ietf-quic-tls-17  . . . . . . . . . . . . . .  52
+     B.11. Since draft-ietf-quic-tls-14  . . . . . . . . . . . . . .  52
+     B.12. Since draft-ietf-quic-tls-13  . . . . . . . . . . . . . .  53
+     B.13. Since draft-ietf-quic-tls-12  . . . . . . . . . . . . . .  53
+     B.14. Since draft-ietf-quic-tls-11  . . . . . . . . . . . . . .  53
+     B.15. Since draft-ietf-quic-tls-10  . . . . . . . . . . . . . .  53
+     B.16. Since draft-ietf-quic-tls-09  . . . . . . . . . . . . . .  53
 
 
 
@@ -170,16 +170,17 @@ Thomson & Turner         Expires 6 December 2020                [Page 3]
 Internet-Draft          Using TLS to Secure QUIC               June 2020
 
 
-     B.18. Since draft-ietf-quic-tls-07  . . . . . . . . . . . . . .  52
-     B.19. Since draft-ietf-quic-tls-05  . . . . . . . . . . . . . .  52
-     B.20. Since draft-ietf-quic-tls-04  . . . . . . . . . . . . . .  52
-     B.21. Since draft-ietf-quic-tls-03  . . . . . . . . . . . . . .  52
-     B.22. Since draft-ietf-quic-tls-02  . . . . . . . . . . . . . .  53
-     B.23. Since draft-ietf-quic-tls-01  . . . . . . . . . . . . . .  53
-     B.24. Since draft-ietf-quic-tls-00  . . . . . . . . . . . . . .  53
-     B.25. Since draft-thomson-quic-tls-01 . . . . . . . . . . . . .  53
-   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  54
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  54
+     B.17. Since draft-ietf-quic-tls-08  . . . . . . . . . . . . . .  53
+     B.18. Since draft-ietf-quic-tls-07  . . . . . . . . . . . . . .  53
+     B.19. Since draft-ietf-quic-tls-05  . . . . . . . . . . . . . .  54
+     B.20. Since draft-ietf-quic-tls-04  . . . . . . . . . . . . . .  54
+     B.21. Since draft-ietf-quic-tls-03  . . . . . . . . . . . . . .  54
+     B.22. Since draft-ietf-quic-tls-02  . . . . . . . . . . . . . .  54
+     B.23. Since draft-ietf-quic-tls-01  . . . . . . . . . . . . . .  54
+     B.24. Since draft-ietf-quic-tls-00  . . . . . . . . . . . . . .  54
+     B.25. Since draft-thomson-quic-tls-01 . . . . . . . . . . . . .  55
+   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . .  55
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  56
 
 1.  Introduction
 
@@ -217,7 +218,6 @@ Internet-Draft          Using TLS to Secure QUIC               June 2020
 
    Internally, TLS is a layered protocol, with the structure shown in
    Figure 1.
-
 
 
 
@@ -2720,7 +2720,87 @@ A.4.  Retry
    ffff00001c0008f067a5502a4262b574 6f6b656ef71a5f12afe3ecf8001a920e
    6fdf1d63
 
+A.5.  ChaCha20-Poly1305 Short Header Packet
+
+   This example shows some of the steps required to protect a packet
+   with a short header.  This example uses AEAD_CHACHA20_POLY1305.
+
+   In this example, TLS produces an application write secret from which
+   a server uses HKDF-Expand-Label to produce four values: a key, an IV,
+   a header protection key, and the secret that will be used after keys
+   are updated (this last value is not used further in this example).
+
+
+
+
+
+
+
+
+
+
+
+
+Thomson & Turner         Expires 6 December 2020               [Page 49]
+
+Internet-Draft          Using TLS to Secure QUIC               June 2020
+
+
+   secret
+       = 9ac312a7f877468ebe69422748ad00a1
+         5443f18203a07d6060f688f30f21632b
+
+   key = HKDF-Expand-Label(secret, "quic key", _, 32)
+       = c6d98ff3441c3fe1b2182094f69caa2e
+         d4b716b65488960a7a984979fb23e1c8
+
+   iv  = HKDF-Expand-Label(secret, "quic iv", _, 12)
+       = e0459b3474bdd0e44a41c144
+
+   hp  = HKDF-Expand-Label(secret, "quic hp", _, 32)
+       = 25a282b9e82f06f21f488917a4fc8f1b
+         73573685608597d0efcb076b0ab7a7a4
+
+   ku  = HKDF-Expand-Label(secret, "quic ku", _, 32)
+       = 1223504755036d556342ee9361d25342
+         1a826c9ecdf3c7148684b36b714881f9
+
+   The following shows the steps involved in protecting a minimal packet
+   with an empty Destination Connection ID.  This packet contains a
+   single PING frame (that is, a payload of just 0x01) and has a packet
+   number of 654360564.  In this example, using a packet number of
+   length 3 (that is, 49140 is encoded) avoids having to pad the payload
+   of the packet; PADDING frames would be needed if the packet number is
+   encoded on fewer octets.
+
+   pn                 = 654360564 (decimal)
+   nonce              = e0459b3474bdd0e46d417eb0
+   unprotected header = 4200bff4
+   payload plaintext  = 01
+   payload ciphertext = 655e5cd55c41f69080575d7999c25a5bfb
+
+   The resulting ciphertext is the minimum size possible.  One byte is
+   skipped to produce the sample for header protection.
+
+   sample = 5e5cd55c41f69080575d7999c25a5bfb
+   mask   = aefefe7d03
+   header = 4cfe4189
+
+   The protected packet is the smallest possible packet size of 21
+   bytes.
+
+   packet = 4cfe4189655e5cd55c41f69080575d7999c25a5bfb
+
 Appendix B.  Change Log
+
+
+
+
+
+Thomson & Turner         Expires 6 December 2020               [Page 50]
+
+Internet-Draft          Using TLS to Secure QUIC               June 2020
+
 
       *RFC Editor's Note:* Please remove this section prior to
       publication of a final version of this document.
@@ -2737,14 +2817,6 @@ B.1.  Since draft-ietf-quic-tls-27
       #3595)
 
 B.2.  Since draft-ietf-quic-tls-26
-
-
-
-
-Thomson & Turner         Expires 6 December 2020               [Page 49]
-
-Internet-Draft          Using TLS to Secure QUIC               June 2020
-
 
    *  No changes
 
@@ -2775,6 +2847,17 @@ B.5.  Since draft-ietf-quic-tls-23
 
    *  PING can be sent at any encryption level (#3034, #3035)
 
+
+
+
+
+
+
+Thomson & Turner         Expires 6 December 2020               [Page 51]
+
+Internet-Draft          Using TLS to Secure QUIC               June 2020
+
+
 B.6.  Since draft-ietf-quic-tls-22
 
    *  Update the salt used for Initial secrets (#2887, #2980)
@@ -2790,17 +2873,6 @@ B.8.  Since draft-ietf-quic-tls-20
 
    *  Define handshake completion and confirmation; define clearer rules
       when it encryption keys should be discarded (#2214, #2267, #2673)
-
-
-
-
-
-
-
-Thomson & Turner         Expires 6 December 2020               [Page 50]
-
-Internet-Draft          Using TLS to Secure QUIC               June 2020
-
 
 B.9.  Since draft-ietf-quic-tls-18
 
@@ -2835,6 +2907,13 @@ B.11.  Since draft-ietf-quic-tls-14
       -  Change the labels for calculation of QUIC keys (#1845, #1971,
          #1991)
 
+
+
+Thomson & Turner         Expires 6 December 2020               [Page 52]
+
+Internet-Draft          Using TLS to Secure QUIC               June 2020
+
+
    *  Initial keys are discarded once Handshake keys are available
       (#1951, #2045)
 
@@ -2848,15 +2927,6 @@ B.13.  Since draft-ietf-quic-tls-12
       #1165, #1190, #1233, #1242, #1252, #1450)
 
       -  The cryptographic handshake uses CRYPTO frames, not stream 0
-
-
-
-
-
-Thomson & Turner         Expires 6 December 2020               [Page 51]
-
-Internet-Draft          Using TLS to Secure QUIC               June 2020
-
 
       -  QUIC packet protection is used in place of TLS record
          protection
@@ -2891,6 +2961,15 @@ B.17.  Since draft-ietf-quic-tls-08
 
 B.18.  Since draft-ietf-quic-tls-07
 
+
+
+
+
+Thomson & Turner         Expires 6 December 2020               [Page 53]
+
+Internet-Draft          Using TLS to Secure QUIC               June 2020
+
+
    *  Handshake errors can be reported with CONNECTION_CLOSE (#608,
       #891)
 
@@ -2905,14 +2984,6 @@ B.20.  Since draft-ietf-quic-tls-04
 B.21.  Since draft-ietf-quic-tls-03
 
    No significant changes.
-
-
-
-
-Thomson & Turner         Expires 6 December 2020               [Page 52]
-
-Internet-Draft          Using TLS to Secure QUIC               June 2020
-
 
 B.22.  Since draft-ietf-quic-tls-02
 
@@ -2947,6 +3018,14 @@ B.24.  Since draft-ietf-quic-tls-00
 
    *  Changed bit used to signal key phase
 
+
+
+
+Thomson & Turner         Expires 6 December 2020               [Page 54]
+
+Internet-Draft          Using TLS to Secure QUIC               June 2020
+
+
    *  Updated key phase markings during the handshake
 
    *  Added TLS interface requirements section
@@ -2962,13 +3041,6 @@ B.25.  Since draft-thomson-quic-tls-01
    *  Updated authors/editors list
 
    *  Added status note
-
-
-
-Thomson & Turner         Expires 6 December 2020               [Page 53]
-
-Internet-Draft          Using TLS to Secure QUIC               June 2020
-
 
 Contributors
 
@@ -3002,6 +3074,14 @@ Contributors
 
    *  Mike Bishop
 
+
+
+
+Thomson & Turner         Expires 6 December 2020               [Page 55]
+
+Internet-Draft          Using TLS to Secure QUIC               June 2020
+
+
    *  Mikkel Fahnøe Jørgensen
 
    *  Nick Banks
@@ -3017,14 +3097,6 @@ Contributors
    *  Victor Vasiliev
 
 Authors' Addresses
-
-
-
-
-Thomson & Turner         Expires 6 December 2020               [Page 54]
-
-Internet-Draft          Using TLS to Secure QUIC               June 2020
-
 
    Martin Thomson (editor)
    Mozilla
@@ -3061,20 +3133,4 @@ Internet-Draft          Using TLS to Secure QUIC               June 2020
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Thomson & Turner         Expires 6 December 2020               [Page 55]
+Thomson & Turner         Expires 6 December 2020               [Page 56]

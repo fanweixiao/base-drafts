@@ -1136,6 +1136,9 @@ code and issues list for this draft can be found at
 <li class="ulEmpty toc compact" id="section-toc.1-1.12.2.4">
                 <p id="section-toc.1-1.12.2.4.1"><a href="#section-a.4" class="xref">A.4</a>.  <a href="#name-retry" class="xref">Retry</a><a href="#section-toc.1-1.12.2.4.1" class="pilcrow">¶</a></p>
 </li>
+<li class="ulEmpty toc compact" id="section-toc.1-1.12.2.5">
+                <p id="section-toc.1-1.12.2.5.1"><a href="#section-a.5" class="xref">A.5</a>.  <a href="#name-chacha20-poly1305-short-hea" class="xref">ChaCha20-Poly1305 Short Header Packet</a><a href="#section-toc.1-1.12.2.5.1" class="pilcrow">¶</a></p>
+</li>
 </ul>
 </li>
 <li class="ulEmpty toc compact" id="section-toc.1-1.13">
@@ -3443,6 +3446,71 @@ ffff00001c0008f067a5502a4262b574 6f6b656ef71a5f12afe3ecf8001a920e
 </div>
 </section>
 </div>
+<div id="chacha20-poly1305-short-header-packet">
+<section id="section-a.5">
+        <h2 id="name-chacha20-poly1305-short-hea">
+<a href="#section-a.5" class="section-number selfRef">A.5. </a><a href="#name-chacha20-poly1305-short-hea" class="section-name selfRef">ChaCha20-Poly1305 Short Header Packet</a>
+        </h2>
+<p id="section-a.5-1">This example shows some of the steps required to protect a packet with
+a short header.  This example uses AEAD_CHACHA20_POLY1305.<a href="#section-a.5-1" class="pilcrow">¶</a></p>
+<p id="section-a.5-2">In this example, TLS produces an application write secret from which a server
+uses HKDF-Expand-Label to produce four values: a key, an IV, a header
+protection key, and the secret that will be used after keys are updated (this
+last value is not used further in this example).<a href="#section-a.5-2" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-a.5-3">
+<pre>
+secret
+    = 9ac312a7f877468ebe69422748ad00a1
+      5443f18203a07d6060f688f30f21632b
+
+key = HKDF-Expand-Label(secret, "quic key", _, 32)
+    = c6d98ff3441c3fe1b2182094f69caa2e
+      d4b716b65488960a7a984979fb23e1c8
+
+iv  = HKDF-Expand-Label(secret, "quic iv", _, 12)
+    = e0459b3474bdd0e44a41c144
+
+hp  = HKDF-Expand-Label(secret, "quic hp", _, 32)
+    = 25a282b9e82f06f21f488917a4fc8f1b
+      73573685608597d0efcb076b0ab7a7a4
+
+ku  = HKDF-Expand-Label(secret, "quic ku", _, 32)
+    = 1223504755036d556342ee9361d25342
+      1a826c9ecdf3c7148684b36b714881f9
+</pre><a href="#section-a.5-3" class="pilcrow">¶</a>
+</div>
+<p id="section-a.5-4">The following shows the steps involved in protecting a minimal packet with an
+empty Destination Connection ID. This packet contains a single PING frame (that
+is, a payload of just 0x01) and has a packet number of 654360564. In this
+example, using a packet number of length 3 (that is, 49140 is encoded) avoids
+having to pad the payload of the packet; PADDING frames would be needed if the
+packet number is encoded on fewer octets.<a href="#section-a.5-4" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-a.5-5">
+<pre>
+pn                 = 654360564 (decimal)
+nonce              = e0459b3474bdd0e46d417eb0
+unprotected header = 4200bff4
+payload plaintext  = 01
+payload ciphertext = 655e5cd55c41f69080575d7999c25a5bfb
+</pre><a href="#section-a.5-5" class="pilcrow">¶</a>
+</div>
+<p id="section-a.5-6">The resulting ciphertext is the minimum size possible. One byte is skipped to
+produce the sample for header protection.<a href="#section-a.5-6" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-a.5-7">
+<pre>
+sample = 5e5cd55c41f69080575d7999c25a5bfb
+mask   = aefefe7d03
+header = 4cfe4189
+</pre><a href="#section-a.5-7" class="pilcrow">¶</a>
+</div>
+<p id="section-a.5-8">The protected packet is the smallest possible packet size of 21 bytes.<a href="#section-a.5-8" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-a.5-9">
+<pre>
+packet = 4cfe4189655e5cd55c41f69080575d7999c25a5bfb
+</pre><a href="#section-a.5-9" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
 </section>
 </div>
 <div id="change-log">
@@ -3450,8 +3518,8 @@ ffff00001c0008f067a5502a4262b574 6f6b656ef71a5f12afe3ecf8001a920e
       <h2 id="name-change-log">
 <a href="#section-appendix.b" class="section-number selfRef">Appendix B. </a><a href="#name-change-log" class="section-name selfRef">Change Log</a>
       </h2>
-<ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-appendix.b-1.1">
+<ul class="ulEmpty normal">
+<li class="ulEmpty normal" id="section-appendix.b-1.1">
           <strong>RFC Editor's Note:</strong> Please remove this section prior to publication of a
 final version of this document.<a href="#section-appendix.b-1.1" class="pilcrow">¶</a>
 </li>
