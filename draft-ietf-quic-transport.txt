@@ -2087,9 +2087,9 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    (ECN) in the first packets it sends, as described in Section 13.4.2.
 
    The CRYPTO frame can be sent in different packet number spaces
-   (Section 12.3).  The sequence numbers used by CRYPTO frames to ensure
-   ordered delivery of cryptographic handshake data start from zero in
-   each packet number space.
+   (Section 12.3).  The offsets used by CRYPTO frames to ensure ordered
+   delivery of cryptographic handshake data start from zero in each
+   packet number space.
 
    Endpoints MUST explicitly negotiate an application protocol.  This
    avoids situations where there is a disagreement about the protocol
@@ -4331,9 +4331,9 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    Handshake packets.
 
    This enforces cryptographic separation between the data sent in the
-   different packet sequence number spaces.  Packet numbers in each
-   space start at packet number 0.  Subsequent packets sent in the same
-   packet number space MUST increase the packet number by at least one.
+   different packet number spaces.  Packet numbers in each space start
+   at packet number 0.  Subsequent packets sent in the same packet
+   number space MUST increase the packet number by at least one.
 
    0-RTT and 1-RTT data exist in the same packet number space to make
    loss recovery algorithms easier to implement between the two packet
