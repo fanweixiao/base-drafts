@@ -3367,14 +3367,14 @@ Initial: DCID=S2, SCID=C1 -&gt;
 value of the initial_source_connection_id transport parameter to <code>C1</code>.<a href="#section-7.3-10" class="pilcrow">¶</a></p>
 <p id="section-7.3-11">When the handshake does not include a Retry (<a href="#fig-auth-cid" class="xref">Figure 6</a>), the server sets
 original_destination_connection_id to <code>S1</code> and initial_source_connection_id to
-<code>S3</code>. The server does not include a retry_source_connection_id transport
-parameter.<a href="#section-7.3-11" class="pilcrow">¶</a></p>
-<p id="section-7.3-12">When the handshake includes a Retry (<a href="#fig-auth-cid-retry" class="xref">Figure 7</a>), the server
-additionally sets original_destination_connection_id to <code>S1</code>,
-retry_source_connection_id to <code>S2</code>, and initial_source_connection_id to <code>S3</code>.<a href="#section-7.3-12" class="pilcrow">¶</a></p>
-<p id="section-7.3-13">Each endpoint validates the transport parameters set by their peer, including
-the client confirming that retry_source_connection_id is absent if no Retry
-packet was processed.<a href="#section-7.3-13" class="pilcrow">¶</a></p>
+<code>S3</code>. In this case, the server does not include a retry_source_connection_id
+transport parameter.<a href="#section-7.3-11" class="pilcrow">¶</a></p>
+<p id="section-7.3-12">When the handshake includes a Retry (<a href="#fig-auth-cid-retry" class="xref">Figure 7</a>), the server sets
+original_destination_connection_id to <code>S1</code>, retry_source_connection_id to <code>S2</code>,
+and initial_source_connection_id to <code>S3</code>.<a href="#section-7.3-12" class="pilcrow">¶</a></p>
+<p id="section-7.3-13">Each endpoint validates transport parameters set by the peer. The client
+confirms that the retry_source_connection_id transport parameter is absent if it
+did not process a Retry packet.<a href="#section-7.3-13" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="transport-parameters">
@@ -9643,8 +9643,8 @@ incurred.<a href="#section-appendix.b-8" class="pilcrow">¶</a></p>
       <h2 id="name-change-log">
 <a href="#section-appendix.c" class="section-number selfRef">Appendix C. </a><a href="#name-change-log" class="section-name selfRef">Change Log</a>
       </h2>
-<ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-appendix.c-1.1">
+<ul class="ulEmpty normal">
+<li class="ulEmpty normal" id="section-appendix.c-1.1">
           <strong>RFC Editor's Note:</strong> Please remove this section prior to publication of a
 final version of this document.<a href="#section-appendix.c-1.1" class="pilcrow">¶</a>
 </li>
