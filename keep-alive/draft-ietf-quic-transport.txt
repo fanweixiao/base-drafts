@@ -3712,7 +3712,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
    An implementation of QUIC might provide applications with an option
    to defer an idle timeout.  This facility could be used when the
-   application has wishes to avoid the loss of state that is bound to an
+   application wishes to avoid the loss of state that is bound to an
    open connection, but does not expect to exchange application data for
    some time.  With this option, an endpoint could send a PING frame
    periodically to defer an idle timeout; see Section 19.2.
