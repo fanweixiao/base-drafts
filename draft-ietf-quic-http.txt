@@ -1300,11 +1300,12 @@ Internet-Draft                   HTTP/3                        June 2020
 
    A client that is unable to retry requests loses all requests that are
    in flight when the server closes the connection.  An endpoint MAY
-   send multiple GOAWAY frames indicating different identifiers, but
-   MUST NOT increase the identifier value they send, since clients might
-   already have retried unprocessed requests on another connection.
-   Receiving a GOAWAY containing a larger identifier than previously
-   received MUST be treated as a connection error of type H3_ID_ERROR.
+   send multiple GOAWAY frames indicating different identifiers, but the
+   identifier in each frame MUST NOT be greater than the identifier in
+   any previous frame, since clients might already have retried
+   unprocessed requests on another connection.  Receiving a GOAWAY
+   containing a larger identifier than previously received MUST be
+   treated as a connection error of type H3_ID_ERROR.
 
    An endpoint that is attempting to gracefully shut down a connection
    can send a GOAWAY frame with a value set to the maximum possible
@@ -1335,7 +1336,6 @@ Internet-Draft                   HTTP/3                        June 2020
    immediate closure of the connection.  An endpoint that completes a
    graceful shutdown SHOULD use the H3_NO_ERROR code when closing the
    connection.
-
 
 
 
