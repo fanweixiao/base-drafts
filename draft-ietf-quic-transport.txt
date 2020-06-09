@@ -76,9 +76,9 @@ Table of Contents
    2.  Streams . . . . . . . . . . . . . . . . . . . . . . . . . . .  10
      2.1.  Stream Types and Identifiers  . . . . . . . . . . . . . .  11
      2.2.  Sending and Receiving Data  . . . . . . . . . . . . . . .  12
-     2.3.  Stream Prioritization . . . . . . . . . . . . . . . . . .  12
+     2.3.  Stream Prioritization . . . . . . . . . . . . . . . . . .  13
      2.4.  Required Operations on Streams  . . . . . . . . . . . . .  13
-   3.  Stream States . . . . . . . . . . . . . . . . . . . . . . . .  13
+   3.  Stream States . . . . . . . . . . . . . . . . . . . . . . . .  14
      3.1.  Sending Stream States . . . . . . . . . . . . . . . . . .  14
      3.2.  Receiving Stream States . . . . . . . . . . . . . . . . .  17
      3.3.  Permitted Frame Types . . . . . . . . . . . . . . . . . .  19
@@ -520,6 +520,9 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    x (E) ...:  Indicates that x is repeated zero or more times (and that
       each instance is length E)
 
+   This document uses network byte order (that is, big endian) values.
+   Fields are placed starting from the high-order bits of each byte.
+
    By convention, individual fields reference a complex field by using
    the name of the complex field.
 
@@ -546,12 +549,9 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    bidirectional.  An alternative view of QUIC unidirectional streams is
    a "message" abstraction of practically unlimited length.
 
-   Streams can be created by sending data.  Other processes associated
-   with stream management - ending, cancelling, and managing flow
-   control - are all designed to impose minimal overheads.  For
-   instance, a single STREAM frame (Section 19.8) can open, carry data
-   for, and close a stream.  Streams can also be long-lived and can last
-   the entire duration of a connection.
+
+
+
 
 
 
@@ -561,6 +561,13 @@ Iyengar & Thomson       Expires 11 December 2020               [Page 10]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
+
+   Streams can be created by sending data.  Other processes associated
+   with stream management - ending, cancelling, and managing flow
+   control - are all designed to impose minimal overheads.  For
+   instance, a single STREAM frame (Section 19.8) can open, carry data
+   for, and close a stream.  Streams can also be long-lived and can last
+   the entire duration of a connection.
 
    Streams can be created by either endpoint, can concurrently send data
    interleaved with other streams, and can be cancelled.  QUIC does not
@@ -597,6 +604,20 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    The least significant two bits from a stream ID therefore identify a
    stream as one of four types, as summarized in Table 1.
 
+
+
+
+
+
+
+
+
+
+Iyengar & Thomson       Expires 11 December 2020               [Page 11]
+
+Internet-Draft           QUIC Transport Protocol               June 2020
+
+
                 +------+----------------------------------+
                 | Bits | Stream Type                      |
                 +======+==================================+
@@ -610,13 +631,6 @@ Internet-Draft           QUIC Transport Protocol               June 2020
                 +------+----------------------------------+
 
                           Table 1: Stream ID Types
-
-
-
-Iyengar & Thomson       Expires 11 December 2020               [Page 11]
-
-Internet-Draft           QUIC Transport Protocol               June 2020
-
 
    Within each type, streams are created with numerically increasing
    stream IDs.  A stream ID that is used out of order results in all
@@ -653,6 +667,13 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    to be preserved when data is transmitted, retransmitted after packet
    loss, or delivered to the application at a receiver.
 
+
+
+Iyengar & Thomson       Expires 11 December 2020               [Page 12]
+
+Internet-Draft           QUIC Transport Protocol               June 2020
+
+
    An endpoint MUST NOT send data on any stream without ensuring that it
    is within the flow control limits set by its peer.  Flow control is
    described in detail in Section 4.
@@ -666,13 +687,6 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    QUIC does not provide a mechanism for exchanging prioritization
    information.  Instead, it relies on receiving priority information
    from the application that uses QUIC.
-
-
-
-Iyengar & Thomson       Expires 11 December 2020               [Page 12]
-
-Internet-Draft           QUIC Transport Protocol               June 2020
-
 
    A QUIC implementation SHOULD provide ways in which an application can
    indicate the relative priority of streams.  When deciding the streams
@@ -709,6 +723,13 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    *  abort reading of the stream and request closure, possibly
       resulting in a STOP_SENDING frame (Section 19.5).
 
+
+
+Iyengar & Thomson       Expires 11 December 2020               [Page 13]
+
+Internet-Draft           QUIC Transport Protocol               June 2020
+
+
    Applications also need to be informed of state changes on streams,
    including when the peer has opened or reset a stream, when a peer
    aborts reading on a stream, when new data is available, and when data
@@ -720,15 +741,6 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    components.  Two state machines are described: one for the streams on
    which an endpoint transmits data (Section 3.1), and another for
    streams on which an endpoint receives data (Section 3.2).
-
-
-
-
-
-Iyengar & Thomson       Expires 11 December 2020               [Page 13]
-
-Internet-Draft           QUIC Transport Protocol               June 2020
-
 
    Unidirectional streams use the applicable state machine directly.
    Bidirectional streams use both state machines.  For the most part,
@@ -755,18 +767,6 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
    Figure 2 shows the states for the part of a stream that sends data to
    a peer.
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2231,8 +2231,8 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    packet protection keys for Initial packets.
 
    The client populates the Source Connection ID field with a value of
-   its choosing and sets the SCID Length field to indicate the length.
-
+   its choosing and sets the Source Connection ID Length field to
+   indicate the length.
 
 
 
@@ -2327,10 +2327,11 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    If a zero-length connection ID is selected, the corresponding
    transport parameter is included with a zero-length value.
 
-   Figure 6 shows the connection IDs that are used in a complete
-   handshake.  The exchange of Initial packets is shown, plus the later
-   exchange of 1-RTT packets that includes the connection ID established
-   during the handshake.
+   Figure 6 shows the connection IDs (with DCID=Destination Connection
+   ID, SCID=Source Connection ID) that are used in a complete handshake.
+   The exchange of Initial packets is shown, plus the later exchange of
+   1-RTT packets that includes the connection ID established during the
+   handshake.
 
    Client                                                  Server
 
@@ -2343,7 +2344,6 @@ Internet-Draft           QUIC Transport Protocol               June 2020
                Figure 6: Use of Connection IDs in a Handshake
 
    Figure 7 shows a similar handshake that includes a Retry packet.
-
 
 
 
@@ -5664,9 +5664,9 @@ Internet-Draft           QUIC Transport Protocol               June 2020
      Long Packet Type (2),
      Type-Specific Bits (4),
      Version (32),
-     DCID Length (8),
+     Destination Connection ID Length (8),
      Destination Connection ID (0..160),
-     SCID Length (8),
+     Source Connection ID Length (8),
      Source Connection ID (0..160),
    }
 
@@ -5697,14 +5697,14 @@ Internet-Draft           QUIC Transport Protocol               June 2020
       byte.  This field indicates which version of QUIC is in use and
       determines how the rest of the protocol fields are interpreted.
 
-   DCID Length:  The byte following the version contains the length in
-      bytes of the Destination Connection ID field that follows it.
-      This length is encoded as an 8-bit unsigned integer.  In QUIC
-      version 1, this value MUST NOT exceed 20.  Endpoints that receive
-      a version 1 long header with a value larger than 20 MUST drop the
-      packet.  Servers SHOULD be able to read longer connection IDs from
-      other QUIC versions in order to properly form a version
-      negotiation packet.
+   Destination Connection ID Length:  The byte following the version
+      contains the length in bytes of the Destination Connection ID
+      field that follows it.  This length is encoded as an 8-bit
+      unsigned integer.  In QUIC version 1, this value MUST NOT exceed
+      20.  Endpoints that receive a version 1 long header with a value
+      larger than 20 MUST drop the packet.  Servers SHOULD be able to
+      read longer connection IDs from other QUIC versions in order to
+      properly form a version negotiation packet.
 
 
 
@@ -5715,22 +5715,23 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
    Destination Connection ID:  The Destination Connection ID field
-      follows the DCID Length field and is between 0 and 20 bytes in
-      length.  Section 7.2 describes the use of this field in more
-      detail.
+      follows the Destination Connection ID Length field and is between
+      0 and 20 bytes in length.  Section 7.2 describes the use of this
+      field in more detail.
 
-   SCID Length:  The byte following the Destination Connection ID
-      contains the length in bytes of the Source Connection ID field
-      that follows it.  This length is encoded as a 8-bit unsigned
-      integer.  In QUIC version 1, this value MUST NOT exceed 20 bytes.
-      Endpoints that receive a version 1 long header with a value larger
-      than 20 MUST drop the packet.  Servers SHOULD be able to read
-      longer connection IDs from other QUIC versions in order to
-      properly form a version negotiation packet.
+   Source Connection ID Length:  The byte following the Destination
+      Connection ID contains the length in bytes of the Source
+      Connection ID field that follows it.  This length is encoded as a
+      8-bit unsigned integer.  In QUIC version 1, this value MUST NOT
+      exceed 20 bytes.  Endpoints that receive a version 1 long header
+      with a value larger than 20 MUST drop the packet.  Servers SHOULD
+      be able to read longer connection IDs from other QUIC versions in
+      order to properly form a version negotiation packet.
 
    Source Connection ID:  The Source Connection ID field follows the
-      SCID Length field and is between 0 and 20 bytes in length.
-      Section 7.2 describes the use of this field in more detail.
+      Source Connection ID Length field and is between 0 and 20 bytes in
+      length.  Section 7.2 describes the use of this field in more
+      detail.
 
    In this version of QUIC, the following packet types with the long
    header are defined:
@@ -5761,7 +5762,6 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    packets in this version of QUIC contain these additional fields:
 
    Reserved Bits:  Two bits (those with a mask of 0x0c) of byte 0 are
-
 
 
 
@@ -5830,9 +5830,9 @@ Internet-Draft           QUIC Transport Protocol               June 2020
      Header Form (1) = 1,
      Unused (7),
      Version (32) = 0,
-     DCID Length (8),
+     Destination Connection ID Length (8),
      Destination Connection ID (0..2040),
-     SCID Length (8),
+     Source Connection ID Length (8),
      Source Connection ID (0..2040),
      Supported Version (32) ...,
    }
@@ -5897,9 +5897,9 @@ Internet-Draft           QUIC Transport Protocol               June 2020
      Reserved Bits (2),
      Packet Number Length (2),
      Version (32),
-     DCID Length (8),
+     Destination Connection ID Length (8),
      Destination Connection ID (0..160),
-     SCID Length (8),
+     Source Connection ID Length (8),
      Source Connection ID (0..160),
      Token Length (i),
      Token (..),
@@ -5912,8 +5912,9 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
    The Initial packet contains a long header as well as the Length and
    Packet Number fields.  The first byte contains the Reserved and
-   Packet Number Length bits.  Between the SCID and Length fields, there
-   are two additional fields specific to the Initial packet.
+   Packet Number Length bits.  Between the Source Connection ID and
+   Length fields, there are two additional fields specific to the
+   Initial packet.
 
    Token Length:  A variable-length integer specifying the length of the
       Token field, in bytes.  This value is zero if no token is present.
@@ -5926,7 +5927,6 @@ Internet-Draft           QUIC Transport Protocol               June 2020
       Retry packet or NEW_TOKEN frame.
 
    Packet Payload:  The payload of the packet.
-
 
 
 
@@ -6013,9 +6013,9 @@ Internet-Draft           QUIC Transport Protocol               June 2020
      Reserved Bits (2),
      Packet Number Length (2),
      Version (32),
-     DCID Length (8),
+     Destination Connection ID Length (8),
      Destination Connection ID (0..160),
-     SCID Length (8),
+     Source Connection ID Length (8),
      Source Connection ID (0..160),
      Length (i),
      Packet Number (8..32),
@@ -6081,9 +6081,9 @@ Internet-Draft           QUIC Transport Protocol               June 2020
      Reserved Bits (2),
      Packet Number Length (2),
      Version (32),
-     DCID Length (8),
+     Destination Connection ID Length (8),
      Destination Connection ID (0..160),
-     SCID Length (8),
+     Source Connection ID Length (8),
      Source Connection ID (0..160),
      Length (i),
      Packet Number (8..32),
@@ -6136,9 +6136,9 @@ Internet-Draft           QUIC Transport Protocol               June 2020
      Long Packet Type (2) = 3,
      Unused (4),
      Version (32),
-     DCID Length (8),
+     Destination Connection ID Length (8),
      Destination Connection ID (0..160),
-     SCID Length (8),
+     Source Connection ID Length (8),
      Source Connection ID (0..160),
      Retry Token (..),
      Retry Integrity Tag (128),

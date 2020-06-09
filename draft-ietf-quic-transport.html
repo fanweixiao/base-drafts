@@ -1897,12 +1897,14 @@ length E)<a href="#section-1.3-4.14" class="pilcrow">¶</a>
 </dd>
 <dd class="break"></dd>
 </dl>
-<p id="section-1.3-5">By convention, individual fields reference a complex field by using the name of
-the complex field.<a href="#section-1.3-5" class="pilcrow">¶</a></p>
-<p id="section-1.3-6">For example:<a href="#section-1.3-6" class="pilcrow">¶</a></p>
+<p id="section-1.3-5">This document uses network byte order (that is, big endian) values.  Fields
+are placed starting from the high-order bits of each byte.<a href="#section-1.3-5" class="pilcrow">¶</a></p>
+<p id="section-1.3-6">By convention, individual fields reference a complex field by using the name of
+the complex field.<a href="#section-1.3-6" class="pilcrow">¶</a></p>
+<p id="section-1.3-7">For example:<a href="#section-1.3-7" class="pilcrow">¶</a></p>
 <span id="name-example-format"></span><div id="fig-ex-format">
 <figure id="figure-1">
-          <div class="artwork art-text alignLeft" id="section-1.3-7.1">
+          <div class="artwork art-text alignLeft" id="section-1.3-8.1">
 <pre>
 Example Structure {
   One-bit Field (1),
@@ -3278,7 +3280,7 @@ the client MUST use the same Destination Connection ID value on all packets in
 this connection. This Destination Connection ID is used to determine packet
 protection keys for Initial packets.<a href="#section-7.2-3" class="pilcrow">¶</a></p>
 <p id="section-7.2-4">The client populates the Source Connection ID field with a value of its choosing
-and sets the SCID Length field to indicate the length.<a href="#section-7.2-4" class="pilcrow">¶</a></p>
+and sets the Source Connection ID Length field to indicate the length.<a href="#section-7.2-4" class="pilcrow">¶</a></p>
 <p id="section-7.2-5">The first flight of 0-RTT packets use the same Destination Connection ID and
 Source Connection ID values as the client's first Initial packet.<a href="#section-7.2-5" class="pilcrow">¶</a></p>
 <p id="section-7.2-6">Upon first receiving an Initial or Retry packet from the server, the client uses
@@ -3347,9 +3349,10 @@ fields of Initial packets.<a href="#section-7.3-6.3" class="pilcrow">¶</a>
 </ul>
 <p id="section-7.3-7">If a zero-length connection ID is selected, the corresponding transport
 parameter is included with a zero-length value.<a href="#section-7.3-7" class="pilcrow">¶</a></p>
-<p id="section-7.3-8"><a href="#fig-auth-cid" class="xref">Figure 6</a> shows the connection IDs that are used in a complete
-handshake. The exchange of Initial packets is shown, plus the later exchange of
-1-RTT packets that includes the connection ID established during the handshake.<a href="#section-7.3-8" class="pilcrow">¶</a></p>
+<p id="section-7.3-8"><a href="#fig-auth-cid" class="xref">Figure 6</a> shows the connection IDs (with DCID=Destination Connection ID,
+SCID=Source Connection ID) that are used in a complete handshake. The exchange
+of Initial packets is shown, plus the later exchange of 1-RTT packets that
+includes the connection ID established during the handshake.<a href="#section-7.3-8" class="pilcrow">¶</a></p>
 <span id="name-use-of-connection-ids-in-a-"></span><div id="fig-auth-cid">
 <figure id="figure-6">
           <div class="artwork art-text alignLeft" id="section-7.3-9.1">
@@ -6112,9 +6115,9 @@ Long Header Packet {
   Long Packet Type (2),
   Type-Specific Bits (4),
   Version (32),
-  DCID Length (8),
+  Destination Connection ID Length (8),
   Destination Connection ID (0..160),
-  SCID Length (8),
+  Source Connection ID Length (8),
   Source Connection ID (0..160),
 }
 </pre>
@@ -6160,7 +6163,7 @@ indicates which version of QUIC is in use and determines how the rest of the
 protocol fields are interpreted.<a href="#section-17.2-3.10" class="pilcrow">¶</a>
 </dd>
 <dd class="break"></dd>
-<dt id="section-17.2-3.11">DCID Length:</dt>
+<dt id="section-17.2-3.11">Destination Connection ID Length:</dt>
 <dd id="section-17.2-3.12">
   The byte following the version contains the length in bytes of the Destination
 Connection ID field that follows it.  This length is encoded as an 8-bit
@@ -6173,12 +6176,12 @@ packet.<a href="#section-17.2-3.12" class="pilcrow">¶</a>
 <dd class="break"></dd>
 <dt id="section-17.2-3.13">Destination Connection ID:</dt>
 <dd id="section-17.2-3.14">
-  The Destination Connection ID field follows the DCID Length field and is
-between 0 and 20 bytes in length. <a href="#negotiating-connection-ids" class="xref">Section 7.2</a> describes
-the use of this field in more detail.<a href="#section-17.2-3.14" class="pilcrow">¶</a>
+  The Destination Connection ID field follows the Destination Connection ID
+Length field and is between 0 and 20 bytes in length.
+<a href="#negotiating-connection-ids" class="xref">Section 7.2</a> describes the use of this field in more detail.<a href="#section-17.2-3.14" class="pilcrow">¶</a>
 </dd>
 <dd class="break"></dd>
-<dt id="section-17.2-3.15">SCID Length:</dt>
+<dt id="section-17.2-3.15">Source Connection ID Length:</dt>
 <dd id="section-17.2-3.16">
   The byte following the Destination Connection ID contains the length in bytes
 of the Source Connection ID field that follows it.  This length is encoded as
@@ -6191,9 +6194,9 @@ packet.<a href="#section-17.2-3.16" class="pilcrow">¶</a>
 <dd class="break"></dd>
 <dt id="section-17.2-3.17">Source Connection ID:</dt>
 <dd id="section-17.2-3.18">
-  The Source Connection ID field follows the SCID Length field and is between 0
-and 20 bytes in length. <a href="#negotiating-connection-ids" class="xref">Section 7.2</a> describes the use of
-this field in more detail.<a href="#section-17.2-3.18" class="pilcrow">¶</a>
+  The Source Connection ID field follows the Source Connection ID Length field
+and is between 0 and 20 bytes in length. <a href="#negotiating-connection-ids" class="xref">Section 7.2</a>
+describes the use of this field in more detail.<a href="#section-17.2-3.18" class="pilcrow">¶</a>
 </dd>
 <dd class="break"></dd>
 </dl>
@@ -6311,9 +6314,9 @@ Version Negotiation Packet {
   Header Form (1) = 1,
   Unused (7),
   Version (32) = 0,
-  DCID Length (8),
+  Destination Connection ID Length (8),
   Destination Connection ID (0..2040),
-  SCID Length (8),
+  Source Connection ID Length (8),
   Source Connection ID (0..2040),
   Supported Version (32) ...,
 }
@@ -6371,9 +6374,9 @@ Initial Packet {
   Reserved Bits (2),
   Packet Number Length (2),
   Version (32),
-  DCID Length (8),
+  Destination Connection ID Length (8),
   Destination Connection ID (0..160),
-  SCID Length (8),
+  Source Connection ID Length (8),
   Source Connection ID (0..160),
   Token Length (i),
   Token (..),
@@ -6389,8 +6392,8 @@ Initial Packet {
 </div>
 <p id="section-17.2.2-3">The Initial packet contains a long header as well as the Length and Packet
 Number fields.  The first byte contains the Reserved and Packet Number Length
-bits.  Between the SCID and Length fields, there are two additional
-fields specific to the Initial packet.<a href="#section-17.2.2-3" class="pilcrow">¶</a></p>
+bits.  Between the Source Connection ID and Length fields, there are two
+additional fields specific to the Initial packet.<a href="#section-17.2.2-3" class="pilcrow">¶</a></p>
 <dl class="dlParallel" id="section-17.2.2-4">
             <dt id="section-17.2.2-4.1">Token Length:</dt>
 <dd id="section-17.2.2-4.2">
@@ -6478,9 +6481,9 @@ limitations.<a href="#section-17.2.3-2" class="pilcrow">¶</a></p>
   Reserved Bits (2),
   Packet Number Length (2),
   Version (32),
-  DCID Length (8),
+  Destination Connection ID Length (8),
   Destination Connection ID (0..160),
-  SCID Length (8),
+  Source Connection ID Length (8),
   Source Connection ID (0..160),
   Length (i),
   Packet Number (8..32),
@@ -6537,9 +6540,9 @@ Handshake Packet {
   Reserved Bits (2),
   Packet Number Length (2),
   Version (32),
-  DCID Length (8),
+  Destination Connection ID Length (8),
   Destination Connection ID (0..160),
-  SCID Length (8),
+  Source Connection ID Length (8),
   Source Connection ID (0..160),
   Length (i),
   Packet Number (8..32),
@@ -6587,9 +6590,9 @@ Retry Packet {
   Long Packet Type (2) = 3,
   Unused (4),
   Version (32),
-  DCID Length (8),
+  Destination Connection ID Length (8),
   Destination Connection ID (0..160),
-  SCID Length (8),
+  Source Connection ID Length (8),
   Source Connection ID (0..160),
   Retry Token (..),
   Retry Integrity Tag (128),
@@ -9773,8 +9776,8 @@ incurred.<a href="#section-appendix.b-8" class="pilcrow">¶</a></p>
       <h2 id="name-change-log">
 <a href="#section-appendix.c" class="section-number selfRef">Appendix C. </a><a href="#name-change-log" class="section-name selfRef">Change Log</a>
       </h2>
-<ul class="ulEmpty normal">
-<li class="ulEmpty normal" id="section-appendix.c-1.1">
+<ul class="normal ulEmpty">
+<li class="normal ulEmpty" id="section-appendix.c-1.1">
           <strong>RFC Editor's Note:</strong> Please remove this section prior to publication of a
 final version of this document.<a href="#section-appendix.c-1.1" class="pilcrow">¶</a>
 </li>
