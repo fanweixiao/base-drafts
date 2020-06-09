@@ -188,14 +188,15 @@ Internet-Draft           QUIC Transport Protocol               June 2020
        13.4.1.  ECN Counts . . . . . . . . . . . . . . . . . . . . .  91
        13.4.2.  ECN Validation . . . . . . . . . . . . . . . . . . .  92
    14. Packet Size . . . . . . . . . . . . . . . . . . . . . . . . .  94
-     14.1.  Path Maximum Transmission Unit (PMTU)  . . . . . . . . .  95
-       14.1.1.  Handling of ICMP Messages by PMTUD . . . . . . . . .  96
-     14.2.  Datagram Packetization Layer PMTU Discovery  . . . . . .  96
-       14.2.1.  DPLPMTUD and Initial Connectivity  . . . . . . . . .  97
-       14.2.2.  Validating the QUIC Path with DPLPMTUD . . . . . . .  97
-       14.2.3.  Handling of ICMP Messages by DPLPMTUD  . . . . . . .  97
-     14.3.  Sending QUIC PMTU Probes . . . . . . . . . . . . . . . .  97
-       14.3.1.  PMTU Probes Containing Source Connection ID  . . . .  98
+     14.1.  Initial Packet Size  . . . . . . . . . . . . . . . . . .  94
+     14.2.  Path Maximum Transmission Unit (PMTU)  . . . . . . . . .  95
+       14.2.1.  Handling of ICMP Messages by PMTUD . . . . . . . . .  96
+     14.3.  Datagram Packetization Layer PMTU Discovery  . . . . . .  96
+       14.3.1.  DPLPMTUD and Initial Connectivity  . . . . . . . . .  97
+       14.3.2.  Validating the QUIC Path with DPLPMTUD . . . . . . .  97
+       14.3.3.  Handling of ICMP Messages by DPLPMTUD  . . . . . . .  97
+     14.4.  Sending QUIC PMTU Probes . . . . . . . . . . . . . . . .  97
+       14.4.1.  PMTU Probes Containing Source Connection ID  . . . .  98
    15. Versions  . . . . . . . . . . . . . . . . . . . . . . . . . .  98
    16. Variable-Length Integer Encoding  . . . . . . . . . . . . . .  99
    17. Packet Formats  . . . . . . . . . . . . . . . . . . . . . . . 100
@@ -217,7 +218,6 @@ Internet-Draft           QUIC Transport Protocol               June 2020
      19.3.  ACK Frames . . . . . . . . . . . . . . . . . . . . . . . 122
        19.3.1.  ACK Ranges . . . . . . . . . . . . . . . . . . . . . 123
        19.3.2.  ECN Counts . . . . . . . . . . . . . . . . . . . . . 124
-     19.4.  RESET_STREAM Frame . . . . . . . . . . . . . . . . . . . 125
 
 
 
@@ -226,6 +226,7 @@ Iyengar & Thomson       Expires 11 December 2020                [Page 4]
 Internet-Draft           QUIC Transport Protocol               June 2020
 
 
+     19.4.  RESET_STREAM Frame . . . . . . . . . . . . . . . . . . . 125
      19.5.  STOP_SENDING Frame . . . . . . . . . . . . . . . . . . . 126
      19.6.  CRYPTO Frame . . . . . . . . . . . . . . . . . . . . . . 127
      19.7.  NEW_TOKEN Frame  . . . . . . . . . . . . . . . . . . . . 128
@@ -273,7 +274,6 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    23. References  . . . . . . . . . . . . . . . . . . . . . . . . . 161
      23.1.  Normative References . . . . . . . . . . . . . . . . . . 161
      23.2.  Informative References . . . . . . . . . . . . . . . . . 162
-   Appendix A.  Sample Packet Number Decoding Algorithm  . . . . . . 164
 
 
 
@@ -282,6 +282,7 @@ Iyengar & Thomson       Expires 11 December 2020                [Page 5]
 Internet-Draft           QUIC Transport Protocol               June 2020
 
 
+   Appendix A.  Sample Packet Number Decoding Algorithm  . . . . . . 164
    Appendix B.  Sample ECN Validation Algorithm  . . . . . . . . . . 165
    Appendix C.  Change Log . . . . . . . . . . . . . . . . . . . . . 166
      C.1.  Since draft-ietf-quic-transport-27  . . . . . . . . . . . 166
@@ -329,7 +330,6 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
    *  Connection migration and resilience to NAT rebinding
 
-   *  Authenticated and encrypted header and payload
 
 
 
@@ -337,6 +337,8 @@ Iyengar & Thomson       Expires 11 December 2020                [Page 6]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
+
+   *  Authenticated and encrypted header and payload
 
    QUIC uses UDP as a substrate to avoid requiring changes to legacy
    client operating systems and middleboxes.  QUIC authenticates all of
@@ -384,8 +386,6 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
       -  Section 14 specifies rules for managing the size of packets.
 
-   *  Finally, encoding details of QUIC protocol elements are described
-      in:
 
 
 
@@ -393,6 +393,9 @@ Iyengar & Thomson       Expires 11 December 2020                [Page 7]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
+
+   *  Finally, encoding details of QUIC protocol elements are described
+      in:
 
       -  Section 15 (Versions),
 
@@ -439,9 +442,6 @@ Internet-Draft           QUIC Transport Protocol               June 2020
       send an acknowledgment; see Section 13.2.1.
 
    Out-of-order packet:  A packet that does not increase the largest
-
-
-
 
 
 
@@ -4277,7 +4277,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    into one UDP datagram.  This can reduce the number of UDP datagrams
    needed to complete the cryptographic handshake and start sending
    data.  This can also be used to construct PMTU probes; see
-   Section 14.3.1.  Receivers MUST be able to process coalesced packets.
+   Section 14.4.1.  Receivers MUST be able to process coalesced packets.
 
    Coalescing packets in order of increasing encryption levels (Initial,
    0-RTT, Handshake, 1-RTT; see Section 4.1.4 of [QUIC-TLS]) makes it
@@ -5224,9 +5224,9 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    The QUIC maximum packet size is the largest size of QUIC packet that
    can be sent across a network path using a single packet.  Any maximum
    packet size larger than 1200 bytes can be discovered using Path
-   Maximum Transmission Unit Discovery (PMTUD; see Section 14.1.1) or
+   Maximum Transmission Unit Discovery (PMTUD; see Section 14.2.1) or
    Datagram Packetization Layer PMTU Discovery (DPLPMTUD; see
-   Section 14.2).
+   Section 14.3).
 
    Enforcement of the max_udp_payload_size transport parameter
    (Section 18.2) might act as an additional limit on the maximum packet
@@ -5234,6 +5234,11 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    known.  However, prior to learning the value of the transport
    parameter, endpoints risk datagrams being lost if they send packets
    larger than the smallest allowed maximum packet size of 1200 bytes.
+
+   UDP datagrams MUST NOT be fragmented at the IP layer.  In IPv4
+   [IPv4], the DF bit MUST be set to prevent fragmentation on the path.
+
+14.1.  Initial Packet Size
 
    A client MUST expand the payload of all UDP datagrams carrying
    Initial packets to at least the smallest allowed maximum packet size
@@ -5249,14 +5254,9 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    client believes that the network path and peer both support the size
    that it chooses.
 
-   UDP datagrams MUST NOT be fragmented at the IP layer.  In IPv4
-   [IPv4], the DF bit MUST be set to prevent fragmentation on the path.
 
-   A server MUST discard an Initial packet that is carried in a UDP
-   datagram with a payload that is less than the smallest allowed
-   maximum packet size of 1200 bytes.  A server MAY also immediately
-   close the connection by sending a CONNECTION_CLOSE frame with an
-   error code of PROTOCOL_VIOLATION; see Section 10.3.1.
+
+
 
 
 
@@ -5266,10 +5266,16 @@ Iyengar & Thomson       Expires 11 December 2020               [Page 94]
 Internet-Draft           QUIC Transport Protocol               June 2020
 
 
+   A server MUST discard an Initial packet that is carried in a UDP
+   datagram with a payload that is less than the smallest allowed
+   maximum packet size of 1200 bytes.  A server MAY also immediately
+   close the connection by sending a CONNECTION_CLOSE frame with an
+   error code of PROTOCOL_VIOLATION; see Section 10.3.1.
+
    The server MUST also limit the number of bytes it sends before
    validating the address of the client; see Section 8.
 
-14.1.  Path Maximum Transmission Unit (PMTU)
+14.2.  Path Maximum Transmission Unit (PMTU)
 
    The Path Maximum Transmission Unit (PMTU) is the maximum size of the
    entire IP packet including the IP header, UDP header, and UDP
@@ -5279,8 +5285,8 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    payload an endpoint sends at any given time is referred to as the
    endpoint's maximum packet size.
 
-   An endpoint SHOULD use DPLPMTUD (Section 14.2) or PMTUD
-   (Section 14.1.1) to determine whether the path to a destination will
+   An endpoint SHOULD use DPLPMTUD (Section 14.3) or PMTUD
+   (Section 14.2.1) to determine whether the path to a destination will
    support a desired maximum packet size without fragmentation.  In the
    absence of these mechanisms, QUIC endpoints SHOULD NOT send IP
    packets larger than the smallest allowed maximum packet size.
@@ -5311,18 +5317,12 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-
-
-
-
-
-
 Iyengar & Thomson       Expires 11 December 2020               [Page 95]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
 
-14.1.1.  Handling of ICMP Messages by PMTUD
+14.2.1.  Handling of ICMP Messages by PMTUD
 
    Path Maximum Transmission Unit Discovery (PMTUD; [RFC1191],
    [RFC8201]) relies on reception of ICMP messages (e.g., IPv6 Packet
@@ -5359,7 +5359,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    QUIC's loss detection algorithm determines that the quoted packet has
    actually been lost.
 
-14.2.  Datagram Packetization Layer PMTU Discovery
+14.3.  Datagram Packetization Layer PMTU Discovery
 
    Datagram Packetization Layer PMTU Discovery (DPLPMTUD; [DPLPMTUD])
    relies on tracking loss or acknowledgment of QUIC packets that are
@@ -5381,19 +5381,19 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    QUIC endpoints implementing DPLPMTUD maintain a maximum packet size
    (DPLPMTUD MPS) for each combination of local and remote IP addresses.
 
-14.2.1.  DPLPMTUD and Initial Connectivity
+14.3.1.  DPLPMTUD and Initial Connectivity
 
    From the perspective of DPLPMTUD, QUIC transport is an acknowledged
    packetization layer (PL).  A sender can therefore enter the DPLPMTUD
    BASE state when the QUIC connection handshake has been completed.
 
-14.2.2.  Validating the QUIC Path with DPLPMTUD
+14.3.2.  Validating the QUIC Path with DPLPMTUD
 
    QUIC provides an acknowledged PL, therefore a sender does not
    implement the DPLPMTUD CONFIRMATION_TIMER while in the
    SEARCH_COMPLETE state; see Section 5.2 of [DPLPMTUD].
 
-14.2.3.  Handling of ICMP Messages by DPLPMTUD
+14.3.3.  Handling of ICMP Messages by DPLPMTUD
 
    An endpoint using DPLPMTUD requires the validation of any received
    ICMP Packet Too Big (PTB) message before using the PTB information,
@@ -5403,9 +5403,9 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    of any received ICMP message).
 
    The considerations for processing ICMP messages described in
-   Section 14.1.1 also apply if these messages are used by DPLPMTUD.
+   Section 14.2.1 also apply if these messages are used by DPLPMTUD.
 
-14.3.  Sending QUIC PMTU Probes
+14.4.  Sending QUIC PMTU Probes
 
    PMTU probes are ack-eliciting packets.
 
@@ -5434,12 +5434,12 @@ Iyengar & Thomson       Expires 11 December 2020               [Page 97]
 Internet-Draft           QUIC Transport Protocol               June 2020
 
 
-14.3.1.  PMTU Probes Containing Source Connection ID
+14.4.1.  PMTU Probes Containing Source Connection ID
 
    Endpoints that rely on the destination connection ID for routing
    incoming QUIC packets are likely to require that the connection ID be
    included in PMTU probes to route any resulting ICMP messages
-   (Section 14.1.1) back to the correct endpoint.  However, only long
+   (Section 14.2.1) back to the correct endpoint.  However, only long
    header packets (Section 17.2) contain the Source Connection ID field,
    and long header packets are not decrypted or acknowledged by the peer
    once the handshake is complete.
@@ -7885,7 +7885,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    interfere with existing connections.
 
    Once a connection is established QUIC endpoints might accept some
-   unauthenticated ICMP packets (see Section 14.1.1), but the use of
+   unauthenticated ICMP packets (see Section 14.2.1), but the use of
    these packets is extremely limited.  The only other type of packet
    that an endpoint might accept is a stateless reset (Section 10.4)
    which relies on the token being kept secret until it is used.
