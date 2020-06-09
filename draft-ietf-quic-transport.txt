@@ -188,36 +188,36 @@ Internet-Draft           QUIC Transport Protocol               June 2020
        13.4.1.  ECN Counts . . . . . . . . . . . . . . . . . . . . .  91
        13.4.2.  ECN Validation . . . . . . . . . . . . . . . . . . .  92
    14. Packet Size . . . . . . . . . . . . . . . . . . . . . . . . .  94
-     14.1.  Path Maximum Transmission Unit (PMTU)  . . . . . . . . .  94
-     14.2.  ICMP Packet Too Big Messages . . . . . . . . . . . . . .  95
-     14.3.  Datagram Packetization Layer PMTU Discovery  . . . . . .  96
-       14.3.1.  PMTU Probes Containing Source Connection ID  . . . .  97
-   15. Versions  . . . . . . . . . . . . . . . . . . . . . . . . . .  97
-   16. Variable-Length Integer Encoding  . . . . . . . . . . . . . .  98
-   17. Packet Formats  . . . . . . . . . . . . . . . . . . . . . . .  99
-     17.1.  Packet Number Encoding and Decoding  . . . . . . . . . .  99
-     17.2.  Long Header Packets  . . . . . . . . . . . . . . . . . . 100
-       17.2.1.  Version Negotiation Packet . . . . . . . . . . . . . 103
-       17.2.2.  Initial Packet . . . . . . . . . . . . . . . . . . . 105
-       17.2.3.  0-RTT  . . . . . . . . . . . . . . . . . . . . . . . 107
-       17.2.4.  Handshake Packet . . . . . . . . . . . . . . . . . . 108
-       17.2.5.  Retry Packet . . . . . . . . . . . . . . . . . . . . 109
-     17.3.  Short Header Packets . . . . . . . . . . . . . . . . . . 111
-       17.3.1.  Latency Spin Bit . . . . . . . . . . . . . . . . . . 113
-   18. Transport Parameter Encoding  . . . . . . . . . . . . . . . . 114
-     18.1.  Reserved Transport Parameters  . . . . . . . . . . . . . 115
-     18.2.  Transport Parameter Definitions  . . . . . . . . . . . . 115
-   19. Frame Types and Formats . . . . . . . . . . . . . . . . . . . 119
-     19.1.  PADDING Frame  . . . . . . . . . . . . . . . . . . . . . 119
-     19.2.  PING Frame . . . . . . . . . . . . . . . . . . . . . . . 120
-     19.3.  ACK Frames . . . . . . . . . . . . . . . . . . . . . . . 120
-       19.3.1.  ACK Ranges . . . . . . . . . . . . . . . . . . . . . 122
-       19.3.2.  ECN Counts . . . . . . . . . . . . . . . . . . . . . 123
-     19.4.  RESET_STREAM Frame . . . . . . . . . . . . . . . . . . . 124
-     19.5.  STOP_SENDING Frame . . . . . . . . . . . . . . . . . . . 125
-     19.6.  CRYPTO Frame . . . . . . . . . . . . . . . . . . . . . . 125
-     19.7.  NEW_TOKEN Frame  . . . . . . . . . . . . . . . . . . . . 126
-     19.8.  STREAM Frames  . . . . . . . . . . . . . . . . . . . . . 127
+     14.1.  Path Maximum Transmission Unit (PMTU)  . . . . . . . . .  95
+       14.1.1.  Handling of ICMP Messages by PMTUD . . . . . . . . .  96
+     14.2.  Datagram Packetization Layer PMTU Discovery  . . . . . .  96
+       14.2.1.  DPLPMTUD and Initial Connectivity  . . . . . . . . .  97
+       14.2.2.  Validating the QUIC Path with DPLPMTUD . . . . . . .  97
+       14.2.3.  Handling of ICMP Messages by DPLPMTUD  . . . . . . .  97
+     14.3.  Sending QUIC PMTU Probes . . . . . . . . . . . . . . . .  97
+       14.3.1.  PMTU Probes Containing Source Connection ID  . . . .  98
+   15. Versions  . . . . . . . . . . . . . . . . . . . . . . . . . .  98
+   16. Variable-Length Integer Encoding  . . . . . . . . . . . . . .  99
+   17. Packet Formats  . . . . . . . . . . . . . . . . . . . . . . . 100
+     17.1.  Packet Number Encoding and Decoding  . . . . . . . . . . 100
+     17.2.  Long Header Packets  . . . . . . . . . . . . . . . . . . 101
+       17.2.1.  Version Negotiation Packet . . . . . . . . . . . . . 104
+       17.2.2.  Initial Packet . . . . . . . . . . . . . . . . . . . 106
+       17.2.3.  0-RTT  . . . . . . . . . . . . . . . . . . . . . . . 108
+       17.2.4.  Handshake Packet . . . . . . . . . . . . . . . . . . 109
+       17.2.5.  Retry Packet . . . . . . . . . . . . . . . . . . . . 110
+     17.3.  Short Header Packets . . . . . . . . . . . . . . . . . . 112
+       17.3.1.  Latency Spin Bit . . . . . . . . . . . . . . . . . . 114
+   18. Transport Parameter Encoding  . . . . . . . . . . . . . . . . 115
+     18.1.  Reserved Transport Parameters  . . . . . . . . . . . . . 116
+     18.2.  Transport Parameter Definitions  . . . . . . . . . . . . 116
+   19. Frame Types and Formats . . . . . . . . . . . . . . . . . . . 120
+     19.1.  PADDING Frame  . . . . . . . . . . . . . . . . . . . . . 120
+     19.2.  PING Frame . . . . . . . . . . . . . . . . . . . . . . . 121
+     19.3.  ACK Frames . . . . . . . . . . . . . . . . . . . . . . . 121
+       19.3.1.  ACK Ranges . . . . . . . . . . . . . . . . . . . . . 123
+       19.3.2.  ECN Counts . . . . . . . . . . . . . . . . . . . . . 124
+     19.4.  RESET_STREAM Frame . . . . . . . . . . . . . . . . . . . 125
 
 
 
@@ -226,54 +226,54 @@ Iyengar & Thomson       Expires 11 December 2020                [Page 4]
 Internet-Draft           QUIC Transport Protocol               June 2020
 
 
-     19.9.  MAX_DATA Frame . . . . . . . . . . . . . . . . . . . . . 129
-     19.10. MAX_STREAM_DATA Frame  . . . . . . . . . . . . . . . . . 129
-     19.11. MAX_STREAMS Frames . . . . . . . . . . . . . . . . . . . 130
-     19.12. DATA_BLOCKED Frame . . . . . . . . . . . . . . . . . . . 131
-     19.13. STREAM_DATA_BLOCKED Frame  . . . . . . . . . . . . . . . 132
-     19.14. STREAMS_BLOCKED Frames . . . . . . . . . . . . . . . . . 132
-     19.15. NEW_CONNECTION_ID Frame  . . . . . . . . . . . . . . . . 133
-     19.16. RETIRE_CONNECTION_ID Frame . . . . . . . . . . . . . . . 134
-     19.17. PATH_CHALLENGE Frame . . . . . . . . . . . . . . . . . . 135
-     19.18. PATH_RESPONSE Frame  . . . . . . . . . . . . . . . . . . 136
-     19.19. CONNECTION_CLOSE Frames  . . . . . . . . . . . . . . . . 136
-     19.20. HANDSHAKE_DONE frame . . . . . . . . . . . . . . . . . . 137
-     19.21. Extension Frames . . . . . . . . . . . . . . . . . . . . 138
-   20. Transport Error Codes . . . . . . . . . . . . . . . . . . . . 138
-     20.1.  Application Protocol Error Codes . . . . . . . . . . . . 140
-   21. Security Considerations . . . . . . . . . . . . . . . . . . . 140
-     21.1.  Handshake Denial of Service  . . . . . . . . . . . . . . 140
-     21.2.  Amplification Attack . . . . . . . . . . . . . . . . . . 141
-     21.3.  Optimistic ACK Attack  . . . . . . . . . . . . . . . . . 142
-     21.4.  Slowloris Attacks  . . . . . . . . . . . . . . . . . . . 142
-     21.5.  Stream Fragmentation and Reassembly Attacks  . . . . . . 142
-     21.6.  Stream Commitment Attack . . . . . . . . . . . . . . . . 143
-     21.7.  Peer Denial of Service . . . . . . . . . . . . . . . . . 143
-     21.8.  Explicit Congestion Notification Attacks . . . . . . . . 144
-     21.9.  Stateless Reset Oracle . . . . . . . . . . . . . . . . . 144
-     21.10. Version Downgrade  . . . . . . . . . . . . . . . . . . . 145
-     21.11. Targeted Attacks by Routing  . . . . . . . . . . . . . . 145
-     21.12. Overview of Security Properties  . . . . . . . . . . . . 145
-       21.12.1.  Handshake . . . . . . . . . . . . . . . . . . . . . 146
-       21.12.2.  Protected Packets . . . . . . . . . . . . . . . . . 147
-       21.12.3.  Connection Migration  . . . . . . . . . . . . . . . 148
-   22. IANA Considerations . . . . . . . . . . . . . . . . . . . . . 152
-     22.1.  Registration Policies for QUIC Registries  . . . . . . . 152
-       22.1.1.  Provisional Registrations  . . . . . . . . . . . . . 152
-       22.1.2.  Selecting Codepoints . . . . . . . . . . . . . . . . 153
-       22.1.3.  Reclaiming Provisional Codepoints  . . . . . . . . . 154
-       22.1.4.  Permanent Registrations  . . . . . . . . . . . . . . 155
-     22.2.  QUIC Transport Parameter Registry  . . . . . . . . . . . 155
-     22.3.  QUIC Frame Type Registry . . . . . . . . . . . . . . . . 156
-     22.4.  QUIC Transport Error Codes Registry  . . . . . . . . . . 157
-   23. References  . . . . . . . . . . . . . . . . . . . . . . . . . 159
-     23.1.  Normative References . . . . . . . . . . . . . . . . . . 159
-     23.2.  Informative References . . . . . . . . . . . . . . . . . 160
-   Appendix A.  Sample Packet Number Decoding Algorithm  . . . . . . 162
-   Appendix B.  Sample ECN Validation Algorithm  . . . . . . . . . . 163
-   Appendix C.  Change Log . . . . . . . . . . . . . . . . . . . . . 164
-     C.1.  Since draft-ietf-quic-transport-27  . . . . . . . . . . . 164
-     C.2.  Since draft-ietf-quic-transport-26  . . . . . . . . . . . 165
+     19.5.  STOP_SENDING Frame . . . . . . . . . . . . . . . . . . . 126
+     19.6.  CRYPTO Frame . . . . . . . . . . . . . . . . . . . . . . 126
+     19.7.  NEW_TOKEN Frame  . . . . . . . . . . . . . . . . . . . . 127
+     19.8.  STREAM Frames  . . . . . . . . . . . . . . . . . . . . . 128
+     19.9.  MAX_DATA Frame . . . . . . . . . . . . . . . . . . . . . 130
+     19.10. MAX_STREAM_DATA Frame  . . . . . . . . . . . . . . . . . 130
+     19.11. MAX_STREAMS Frames . . . . . . . . . . . . . . . . . . . 131
+     19.12. DATA_BLOCKED Frame . . . . . . . . . . . . . . . . . . . 132
+     19.13. STREAM_DATA_BLOCKED Frame  . . . . . . . . . . . . . . . 133
+     19.14. STREAMS_BLOCKED Frames . . . . . . . . . . . . . . . . . 133
+     19.15. NEW_CONNECTION_ID Frame  . . . . . . . . . . . . . . . . 134
+     19.16. RETIRE_CONNECTION_ID Frame . . . . . . . . . . . . . . . 135
+     19.17. PATH_CHALLENGE Frame . . . . . . . . . . . . . . . . . . 136
+     19.18. PATH_RESPONSE Frame  . . . . . . . . . . . . . . . . . . 137
+     19.19. CONNECTION_CLOSE Frames  . . . . . . . . . . . . . . . . 137
+     19.20. HANDSHAKE_DONE frame . . . . . . . . . . . . . . . . . . 138
+     19.21. Extension Frames . . . . . . . . . . . . . . . . . . . . 139
+   20. Transport Error Codes . . . . . . . . . . . . . . . . . . . . 139
+     20.1.  Application Protocol Error Codes . . . . . . . . . . . . 141
+   21. Security Considerations . . . . . . . . . . . . . . . . . . . 141
+     21.1.  Handshake Denial of Service  . . . . . . . . . . . . . . 141
+     21.2.  Amplification Attack . . . . . . . . . . . . . . . . . . 142
+     21.3.  Optimistic ACK Attack  . . . . . . . . . . . . . . . . . 143
+     21.4.  Slowloris Attacks  . . . . . . . . . . . . . . . . . . . 143
+     21.5.  Stream Fragmentation and Reassembly Attacks  . . . . . . 143
+     21.6.  Stream Commitment Attack . . . . . . . . . . . . . . . . 144
+     21.7.  Peer Denial of Service . . . . . . . . . . . . . . . . . 144
+     21.8.  Explicit Congestion Notification Attacks . . . . . . . . 145
+     21.9.  Stateless Reset Oracle . . . . . . . . . . . . . . . . . 145
+     21.10. Version Downgrade  . . . . . . . . . . . . . . . . . . . 146
+     21.11. Targeted Attacks by Routing  . . . . . . . . . . . . . . 146
+     21.12. Overview of Security Properties  . . . . . . . . . . . . 146
+       21.12.1.  Handshake . . . . . . . . . . . . . . . . . . . . . 147
+       21.12.2.  Protected Packets . . . . . . . . . . . . . . . . . 148
+       21.12.3.  Connection Migration  . . . . . . . . . . . . . . . 149
+   22. IANA Considerations . . . . . . . . . . . . . . . . . . . . . 153
+     22.1.  Registration Policies for QUIC Registries  . . . . . . . 153
+       22.1.1.  Provisional Registrations  . . . . . . . . . . . . . 153
+       22.1.2.  Selecting Codepoints . . . . . . . . . . . . . . . . 154
+       22.1.3.  Reclaiming Provisional Codepoints  . . . . . . . . . 155
+       22.1.4.  Permanent Registrations  . . . . . . . . . . . . . . 156
+     22.2.  QUIC Transport Parameter Registry  . . . . . . . . . . . 156
+     22.3.  QUIC Frame Type Registry . . . . . . . . . . . . . . . . 157
+     22.4.  QUIC Transport Error Codes Registry  . . . . . . . . . . 158
+   23. References  . . . . . . . . . . . . . . . . . . . . . . . . . 160
+     23.1.  Normative References . . . . . . . . . . . . . . . . . . 160
+     23.2.  Informative References . . . . . . . . . . . . . . . . . 161
+   Appendix A.  Sample Packet Number Decoding Algorithm  . . . . . . 163
 
 
 
@@ -282,35 +282,39 @@ Iyengar & Thomson       Expires 11 December 2020                [Page 5]
 Internet-Draft           QUIC Transport Protocol               June 2020
 
 
-     C.3.  Since draft-ietf-quic-transport-25  . . . . . . . . . . . 165
-     C.4.  Since draft-ietf-quic-transport-24  . . . . . . . . . . . 166
-     C.5.  Since draft-ietf-quic-transport-23  . . . . . . . . . . . 167
-     C.6.  Since draft-ietf-quic-transport-22  . . . . . . . . . . . 167
-     C.7.  Since draft-ietf-quic-transport-21  . . . . . . . . . . . 168
-     C.8.  Since draft-ietf-quic-transport-20  . . . . . . . . . . . 169
-     C.9.  Since draft-ietf-quic-transport-19  . . . . . . . . . . . 170
-     C.10. Since draft-ietf-quic-transport-18  . . . . . . . . . . . 170
-     C.11. Since draft-ietf-quic-transport-17  . . . . . . . . . . . 170
-     C.12. Since draft-ietf-quic-transport-16  . . . . . . . . . . . 171
-     C.13. Since draft-ietf-quic-transport-15  . . . . . . . . . . . 172
-     C.14. Since draft-ietf-quic-transport-14  . . . . . . . . . . . 173
-     C.15. Since draft-ietf-quic-transport-13  . . . . . . . . . . . 173
-     C.16. Since draft-ietf-quic-transport-12  . . . . . . . . . . . 174
-     C.17. Since draft-ietf-quic-transport-11  . . . . . . . . . . . 175
-     C.18. Since draft-ietf-quic-transport-10  . . . . . . . . . . . 175
-     C.19. Since draft-ietf-quic-transport-09  . . . . . . . . . . . 176
-     C.20. Since draft-ietf-quic-transport-08  . . . . . . . . . . . 176
-     C.21. Since draft-ietf-quic-transport-07  . . . . . . . . . . . 177
-     C.22. Since draft-ietf-quic-transport-06  . . . . . . . . . . . 178
-     C.23. Since draft-ietf-quic-transport-05  . . . . . . . . . . . 178
-     C.24. Since draft-ietf-quic-transport-04  . . . . . . . . . . . 178
-     C.25. Since draft-ietf-quic-transport-03  . . . . . . . . . . . 179
-     C.26. Since draft-ietf-quic-transport-02  . . . . . . . . . . . 179
-     C.27. Since draft-ietf-quic-transport-01  . . . . . . . . . . . 180
-     C.28. Since draft-ietf-quic-transport-00  . . . . . . . . . . . 182
-     C.29. Since draft-hamilton-quic-transport-protocol-01 . . . . . 182
-   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . . 183
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . 184
+   Appendix B.  Sample ECN Validation Algorithm  . . . . . . . . . . 164
+   Appendix C.  Change Log . . . . . . . . . . . . . . . . . . . . . 165
+     C.1.  Since draft-ietf-quic-transport-27  . . . . . . . . . . . 165
+     C.2.  Since draft-ietf-quic-transport-26  . . . . . . . . . . . 166
+     C.3.  Since draft-ietf-quic-transport-25  . . . . . . . . . . . 166
+     C.4.  Since draft-ietf-quic-transport-24  . . . . . . . . . . . 167
+     C.5.  Since draft-ietf-quic-transport-23  . . . . . . . . . . . 168
+     C.6.  Since draft-ietf-quic-transport-22  . . . . . . . . . . . 168
+     C.7.  Since draft-ietf-quic-transport-21  . . . . . . . . . . . 169
+     C.8.  Since draft-ietf-quic-transport-20  . . . . . . . . . . . 170
+     C.9.  Since draft-ietf-quic-transport-19  . . . . . . . . . . . 171
+     C.10. Since draft-ietf-quic-transport-18  . . . . . . . . . . . 171
+     C.11. Since draft-ietf-quic-transport-17  . . . . . . . . . . . 171
+     C.12. Since draft-ietf-quic-transport-16  . . . . . . . . . . . 172
+     C.13. Since draft-ietf-quic-transport-15  . . . . . . . . . . . 173
+     C.14. Since draft-ietf-quic-transport-14  . . . . . . . . . . . 174
+     C.15. Since draft-ietf-quic-transport-13  . . . . . . . . . . . 174
+     C.16. Since draft-ietf-quic-transport-12  . . . . . . . . . . . 175
+     C.17. Since draft-ietf-quic-transport-11  . . . . . . . . . . . 176
+     C.18. Since draft-ietf-quic-transport-10  . . . . . . . . . . . 176
+     C.19. Since draft-ietf-quic-transport-09  . . . . . . . . . . . 177
+     C.20. Since draft-ietf-quic-transport-08  . . . . . . . . . . . 177
+     C.21. Since draft-ietf-quic-transport-07  . . . . . . . . . . . 178
+     C.22. Since draft-ietf-quic-transport-06  . . . . . . . . . . . 179
+     C.23. Since draft-ietf-quic-transport-05  . . . . . . . . . . . 179
+     C.24. Since draft-ietf-quic-transport-04  . . . . . . . . . . . 179
+     C.25. Since draft-ietf-quic-transport-03  . . . . . . . . . . . 180
+     C.26. Since draft-ietf-quic-transport-02  . . . . . . . . . . . 180
+     C.27. Since draft-ietf-quic-transport-01  . . . . . . . . . . . 181
+     C.28. Since draft-ietf-quic-transport-00  . . . . . . . . . . . 183
+     C.29. Since draft-hamilton-quic-transport-protocol-01 . . . . . 183
+   Contributors  . . . . . . . . . . . . . . . . . . . . . . . . . . 184
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . 185
 
 1.  Introduction
 
@@ -326,10 +330,6 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    *  Connection migration and resilience to NAT rebinding
 
    *  Authenticated and encrypted header and payload
-
-
-
-
 
 
 
@@ -5213,23 +5213,37 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 14.  Packet Size
 
    The QUIC packet size includes the QUIC header and protected payload,
-   but not the UDP or IP header.
+   but not the UDP or IP headers.
 
-   A client MUST expand the payload of all UDP datagrams carrying
-   Initial packets to at least 1200 bytes, by adding PADDING frames to
-   the Initial packet or by coalescing the Initial packet; see
-   Section 12.2.  Sending a UDP datagram of this size ensures that the
-   network path from the client to the server supports a reasonable
-   Maximum Transmission Unit (MTU).  Padding datagrams also helps reduce
-   the amplitude of amplification attacks caused by server responses
-   toward an unverified client address; see Section 8.
+   QUIC depends upon a minimum IP packet size of at least 1280 bytes.
+   This is the IPv6 minimum size [RFC8200] and is also supported by most
+   modern IPv4 networks.  Assuming the minimum IP header size, this
+   results in a QUIC maximum packet size of 1232 bytes for IPv6 and 1252
+   bytes for IPv4.
+
+   The QUIC maximum packet size is the largest size of QUIC packet that
+   can be sent across a network path using a single packet.  Any maximum
+   packet size larger than 1200 bytes can be discovered using Path
+   Maximum Transmission Unit Discovery (PMTUD; see Section 14.1.1) or
+   Datagram Packetization Layer PMTU Discovery (DPLPMTUD; see
+   Section 14.2).
 
    Enforcement of the max_udp_payload_size transport parameter
-   (Section 18.2) might act as an additional limit on packet size.
-   Exceeding this limit can be avoided once the value is known.
-   However, prior to learning the value of the transport parameter,
-   endpoints risk datagrams being lost if they send packets larger than
-   1200 bytes.
+   (Section 18.2) might act as an additional limit on the maximum packet
+   size.  A sender can avoid exceeding this limit, once the value is
+   known.  However, prior to learning the value of the transport
+   parameter, endpoints risk datagrams being lost if they send packets
+   larger than the smallest allowed maximum packet size of 1200 bytes.
+
+   A client MUST expand the payload of all UDP datagrams carrying
+   Initial packets to at least the smallest allowed maximum packet size
+   (1200 bytes) by adding PADDING frames to the Initial packet or by
+   coalescing the Initial packet; see Section 12.2.  Sending a UDP
+   datagram of this size ensures that the network path from the client
+   to the server supports a reasonable Path Maximum Transmission Unit
+   (PMTU).  This also helps reduce the amplitude of amplification
+   attacks caused by server responses toward an unverified client
+   address; see Section 8.
 
    Datagrams containing Initial packets MAY exceed 1200 bytes if the
    client believes that the network path and peer both support the size
@@ -5239,9 +5253,18 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    [IPv4], the DF bit MUST be set to prevent fragmentation on the path.
 
    A server MUST discard an Initial packet that is carried in a UDP
-   datagram with a payload that is less than 1200 bytes.  A server MAY
-   also immediately close the connection by sending a CONNECTION_CLOSE
-   frame with an error code of PROTOCOL_VIOLATION; see Section 10.3.1.
+   datagram with a payload that is less than the smallest allowed
+   maximum packet size of 1200 bytes.  A server MAY also immediately
+   close the connection by sending a CONNECTION_CLOSE frame with an
+   error code of PROTOCOL_VIOLATION; see Section 10.3.1.
+
+
+
+
+Iyengar & Thomson       Expires 11 December 2020               [Page 94]
+
+Internet-Draft           QUIC Transport Protocol               June 2020
+
 
    The server MUST also limit the number of bytes it sends before
    validating the address of the client; see Section 8.
@@ -5256,58 +5279,35 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    payload an endpoint sends at any given time is referred to as the
    endpoint's maximum packet size.
 
+   An endpoint SHOULD use DPLPMTUD (Section 14.2) or PMTUD
+   (Section 14.1.1) to determine whether the path to a destination will
+   support a desired maximum packet size without fragmentation.  In the
+   absence of these mechanisms, QUIC endpoints SHOULD NOT send IP
+   packets larger than the smallest allowed maximum packet size.
 
+   Both DPLPMTUD and PMTUD send IP packets that are larger than the
+   current maximum packet size.  We refer to these as PMTU probes.  All
+   QUIC packets that are not sent in a PMTU probe SHOULD be sized to fit
+   within the maximum packet size to avoid the packet being fragmented
+   or dropped [RFC8085].
 
-
-
-
-Iyengar & Thomson       Expires 11 December 2020               [Page 94]
-
-Internet-Draft           QUIC Transport Protocol               June 2020
-
-
-   QUIC depends on a PMTU of at least 1280 bytes.  This is the IPv6
-   minimum size [RFC8200] and is also supported by most modern IPv4
-   networks.  All QUIC packets (except for PMTU probe packets) SHOULD be
-   sized to fit within the maximum packet size to avoid the packet being
-   fragmented or dropped [RFC8085].
-
-   An endpoint SHOULD use Datagram Packetization Layer PMTU Discovery
-   ([DPLPMTUD]) or implement Path MTU Discovery (PMTUD) [RFC1191]
-   [RFC8201] to determine whether the path to a destination will support
-   a desired message size without fragmentation.
-
-   In the absence of these mechanisms, QUIC endpoints SHOULD NOT send IP
-   packets larger than 1280 bytes.  Assuming the minimum IP header size,
-   this results in a QUIC maximum packet size of 1232 bytes for IPv6 and
-   1252 bytes for IPv4.  A QUIC implementation MAY be more conservative
-   in computing the QUIC maximum packet size to allow for unknown tunnel
-   overheads or IP header options/extensions.
+   If a QUIC endpoint determines that the PMTU between any pair of local
+   and remote IP addresses has fallen below the smallest allowed maximum
+   packet size of 1200 bytes, it MUST immediately cease sending QUIC
+   packets, except for those in PMTU probes or those containing
+   CONNECTION_CLOSE frames, on the affected path.  An endpoint MAY
+   terminate the connection if an alternative path cannot be found.
 
    Each pair of local and remote addresses could have a different PMTU.
    QUIC implementations that implement any kind of PMTU discovery
    therefore SHOULD maintain a maximum packet size for each combination
    of local and remote IP addresses.
 
-   If a QUIC endpoint determines that the PMTU between any pair of local
-   and remote IP addresses has fallen below the size needed to support
-   the smallest allowed maximum packet size, it MUST immediately cease
-   sending QUIC packets, except for PMTU probe packets, on the affected
-   path.  An endpoint MAY terminate the connection if an alternative
-   path cannot be found.
+   A QUIC implementation MAY be more conservative in computing the
+   maximum packet size to allow for unknown tunnel overheads or IP
+   header options/extensions.
 
-14.2.  ICMP Packet Too Big Messages
 
-   PMTU discovery [RFC1191] [RFC8201] relies on reception of ICMP
-   messages (e.g., IPv6 Packet Too Big messages) that indicate when a
-   packet is dropped because it is larger than the local router MTU.
-   DPLPMTUD can also optionally use these messages.  This use of ICMP
-   messages is potentially vulnerable to off-path attacks that
-   successfully guess the addresses used on the path and reduce the PMTU
-   to a bandwidth-inefficient value.
-
-   An endpoint MUST ignore an ICMP message that claims the PMTU has
-   decreased below 1280 bytes.
 
 
 
@@ -5322,6 +5322,20 @@ Iyengar & Thomson       Expires 11 December 2020               [Page 95]
 Internet-Draft           QUIC Transport Protocol               June 2020
 
 
+14.1.1.  Handling of ICMP Messages by PMTUD
+
+   Path Maximum Transmission Unit Discovery (PMTUD; [RFC1191],
+   [RFC8201]) relies on reception of ICMP messages (e.g., IPv6 Packet
+   Too Big messages) that indicate when a packet is dropped because it
+   is larger than the local router MTU.  DPLPMTUD can also optionally
+   use these messages.  This use of ICMP messages is potentially
+   vulnerable to off-path attacks that successfully guess the addresses
+   used on the path and reduce the PMTU to a bandwidth-inefficient
+   value.
+
+   An endpoint MUST ignore an ICMP message that claims the PMTU has
+   decreased below the minimum QUIC packet size.
+
    The requirements for generating ICMP ([RFC1812], [RFC4443]) state
    that the quoted packet should contain as much of the original packet
    as possible without exceeding the minimum MTU for the IP version.
@@ -5329,17 +5343,15 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    information unintelligible, as described in Section 1.1 of
    [DPLPMTUD].
 
-   QUIC endpoints SHOULD validate ICMP messages to protect from off-path
-   injection as specified in [RFC8201] and Section 5.2 of [RFC8085].
-   This validation SHOULD use the quoted packet supplied in the payload
-   of an ICMP message to associate the message with a corresponding
-   transport connection [DPLPMTUD].
-
+   QUIC endpoints using PMTUD SHOULD validate ICMP messages to protect
+   from off-path injection as specified in [RFC8201] and Section 5.2 of
+   [RFC8085].  This validation SHOULD use the quoted packet supplied in
+   the payload of an ICMP message to associate the message with a
+   corresponding transport connection (see Section 4.6.1 of [DPLPMTUD]).
    ICMP message validation MUST include matching IP addresses and UDP
    ports [RFC8085] and, when possible, connection IDs to an active QUIC
-   session.
-
-   The endpoint SHOULD ignore all ICMP messages that fail validation.
+   session.  The endpoint SHOULD ignore all ICMP messages that fail
+   validation.
 
    An endpoint MUST NOT increase PMTU based on ICMP messages; see
    Section 3, clause 6 of [DPLPMTUD].  Any reduction in the QUIC maximum
@@ -5347,29 +5359,17 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    QUIC's loss detection algorithm determines that the quoted packet has
    actually been lost.
 
-14.3.  Datagram Packetization Layer PMTU Discovery
+14.2.  Datagram Packetization Layer PMTU Discovery
 
-   Section 6.3 of [DPLPMTUD] provides considerations for implementing
-   Datagram Packetization Layer PMTUD (DPLPMTUD) with QUIC.
+   Datagram Packetization Layer PMTU Discovery (DPLPMTUD; [DPLPMTUD])
+   relies on tracking loss or acknowledgment of QUIC packets that are
+   carried in PMTU probes.  PMTU probes for DPLPMTUD that use the
+   PADDING frame implement "Probing using padding data", as defined in
+   Section 4.1 of [DPLPMTUD].
 
-   When implementing the algorithm in Section 5 of [DPLPMTUD], the
-   initial value of BASE_PMTU SHOULD be consistent with the minimum QUIC
-   packet size (1232 bytes for IPv6 and 1252 bytes for IPv4).
-
-   PING and PADDING frames can be used to generate PMTU probe packets.
-   These frames might not be retransmitted if a probe packet containing
-   them is lost.  However, these frames do consume congestion window,
-   which could delay the transmission of subsequent application data.
-
-   A PING frame can be included in a PMTU probe to ensure that a valid
-   probe is acknowledged.
-
-   The considerations for processing ICMP messages in the previous
-   section also apply if these messages are used by DPLPMTUD.
-
-
-
-
+   Endpoints SHOULD set the initial value of BASE_PMTU (see Section 5.1
+   of [DPLPMTUD]) to be consistent with the minimum QUIC packet size.
+   The MIN_PLPMTU is the same as the BASE_PMTU.
 
 
 
@@ -5378,24 +5378,87 @@ Iyengar & Thomson       Expires 11 December 2020               [Page 96]
 Internet-Draft           QUIC Transport Protocol               June 2020
 
 
+   QUIC endpoints implementing DPLPMTUD maintain a maximum packet size
+   (DPLPMTUD MPS) for each combination of local and remote IP addresses.
+
+14.2.1.  DPLPMTUD and Initial Connectivity
+
+   From the perspective of DPLPMTUD, QUIC transport is an acknowledged
+   packetization layer (PL).  A sender can therefore enter the DPLPMTUD
+   BASE state when the QUIC connection handshake has been completed.
+
+14.2.2.  Validating the QUIC Path with DPLPMTUD
+
+   QUIC provides an acknowledged PL, therefore a sender does not
+   implement the DPLPMTUD CONFIRMATION_TIMER while in the
+   SEARCH_COMPLETE state; see Section 5.2 of [DPLPMTUD].
+
+14.2.3.  Handling of ICMP Messages by DPLPMTUD
+
+   An endpoint using DPLPMTUD requires the validation of any received
+   ICMP Packet Too Big (PTB) message before using the PTB information,
+   as defined in Section 4.6 of [DPLPMTUD].  In addition to UDP port
+   validation, QUIC validates an ICMP message by using other PL
+   information (e.g., validation of connection IDs in the quoted packet
+   of any received ICMP message).
+
+   The considerations for processing ICMP messages described in
+   Section 14.1.1 also apply if these messages are used by DPLPMTUD.
+
+14.3.  Sending QUIC PMTU Probes
+
+   PMTU probes are ack-eliciting packets.
+
+   Endpoints could limit the content of PMTU probes to PING and PADDING
+   frames as packets that are larger than the current maximum packet
+   size are more likely to be dropped by the network.  Loss of a QUIC
+   packet that is carried in a PMTU probe is therefore not a reliable
+   indication of congestion and SHOULD NOT trigger a congestion control
+   reaction; see Section 3, Bullet 7 of [DPLPMTUD].  However, PMTU
+   probes consume congestion window, which could delay subsequent
+   transmission by an application.
+
+
+
+
+
+
+
+
+
+
+
+
+Iyengar & Thomson       Expires 11 December 2020               [Page 97]
+
+Internet-Draft           QUIC Transport Protocol               June 2020
+
+
 14.3.1.  PMTU Probes Containing Source Connection ID
 
    Endpoints that rely on the destination connection ID for routing
    incoming QUIC packets are likely to require that the connection ID be
-   included in PMTU probe packets to route any resulting ICMP messages
-   (Section 14.2) back to the correct endpoint.  However, only long
-   header packets (Section 17.2) contain source connection IDs, and long
-   header packets are not decrypted or acknowledged by the peer once the
-   handshake is complete.
+   included in PMTU probes to route any resulting ICMP messages
+   (Section 14.1.1) back to the correct endpoint.  However, only long
+   header packets (Section 17.2) contain the Source Connection ID field,
+   and long header packets are not decrypted or acknowledged by the peer
+   once the handshake is complete.
 
-   One way to construct a probe for the path MTU is to coalesce (see
-   Section 12.2) a Handshake packet (Section 17.2.4) with a short header
-   packet in a single UDP datagram.  If the UDP datagram reaches the
-   endpoint, the Handshake packet will be ignored, but the short header
-   packet will be acknowledged.  If the UDP datagram causes an ICMP
-   message to be sent, the first part of the datagram will be quoted in
-   that message.  If the source connection ID is within the quoted
-   portion of the UDP datagram, that could be used for routing.
+   One way to construct a PMTU probe is to coalesce (see Section 12.2) a
+   packet with a long header, such as a Handshake or 0-RTT packet
+   (Section 17.2), with a short header packet in a single UDP datagram.
+   If the resulting PMTU probe reaches the endpoint, the packet with the
+   long header will be ignored, but the short header packet will be
+   acknowledged.  If the PMTU probe causes an ICMP message to be sent,
+   the first part of the probe will be quoted in that message.  If the
+   Source Connection ID field is within the quoted portion of the probe,
+   that could be used for routing or validation of the ICMP message.
+
+   Note:  The purpose of using a packet with a long header is only to
+      ensure that the quoted packet contained in the ICMP message
+      contains a Source Connection ID field.  This packet does not need
+      to be a valid packet and it can be sent even if there is no
+      current use for packets of that type.
 
 15.  Versions
 
@@ -5416,23 +5479,22 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    Versions with the most significant 16 bits of the version number
    cleared are reserved for use in future IETF consensus documents.
 
+
+
+
+
+
+
+Iyengar & Thomson       Expires 11 December 2020               [Page 98]
+
+Internet-Draft           QUIC Transport Protocol               June 2020
+
+
    Versions that follow the pattern 0x?a?a?a?a are reserved for use in
    forcing version negotiation to be exercised.  That is, any version
    number where the low four bits of all bytes is 1010 (in binary).  A
    client or server MAY advertise support for any of these reserved
    versions.
-
-
-
-
-
-
-
-
-Iyengar & Thomson       Expires 11 December 2020               [Page 97]
-
-Internet-Draft           QUIC Transport Protocol               June 2020
-
 
    Reserved version numbers will never represent a real protocol; a
    client MAY use one of these version numbers with the expectation that
@@ -5479,13 +5541,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-
-
-
-
-
-
-Iyengar & Thomson       Expires 11 December 2020               [Page 98]
+Iyengar & Thomson       Expires 11 December 2020               [Page 99]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -5541,7 +5597,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020               [Page 99]
+Iyengar & Thomson       Expires 11 December 2020              [Page 100]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -5597,7 +5653,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 100]
+Iyengar & Thomson       Expires 11 December 2020              [Page 101]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -5653,7 +5709,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 101]
+Iyengar & Thomson       Expires 11 December 2020              [Page 102]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -5709,7 +5765,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 102]
+Iyengar & Thomson       Expires 11 December 2020              [Page 103]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -5765,7 +5821,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 103]
+Iyengar & Thomson       Expires 11 December 2020              [Page 104]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -5821,7 +5877,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 104]
+Iyengar & Thomson       Expires 11 December 2020              [Page 105]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -5877,7 +5933,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 105]
+Iyengar & Thomson       Expires 11 December 2020              [Page 106]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -5933,7 +5989,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 106]
+Iyengar & Thomson       Expires 11 December 2020              [Page 107]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -5989,7 +6045,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 107]
+Iyengar & Thomson       Expires 11 December 2020              [Page 108]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -6045,7 +6101,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 108]
+Iyengar & Thomson       Expires 11 December 2020              [Page 109]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -6101,7 +6157,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 109]
+Iyengar & Thomson       Expires 11 December 2020              [Page 110]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -6157,7 +6213,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 110]
+Iyengar & Thomson       Expires 11 December 2020              [Page 111]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -6213,7 +6269,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 111]
+Iyengar & Thomson       Expires 11 December 2020              [Page 112]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -6269,7 +6325,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 112]
+Iyengar & Thomson       Expires 11 December 2020              [Page 113]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -6325,7 +6381,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 113]
+Iyengar & Thomson       Expires 11 December 2020              [Page 114]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -6381,7 +6437,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 114]
+Iyengar & Thomson       Expires 11 December 2020              [Page 115]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -6437,7 +6493,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 115]
+Iyengar & Thomson       Expires 11 December 2020              [Page 116]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -6493,7 +6549,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 116]
+Iyengar & Thomson       Expires 11 December 2020              [Page 117]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -6549,7 +6605,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 117]
+Iyengar & Thomson       Expires 11 December 2020              [Page 118]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -6605,7 +6661,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 118]
+Iyengar & Thomson       Expires 11 December 2020              [Page 119]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -6661,7 +6717,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 119]
+Iyengar & Thomson       Expires 11 December 2020              [Page 120]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -6717,7 +6773,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 120]
+Iyengar & Thomson       Expires 11 December 2020              [Page 121]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -6773,7 +6829,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 121]
+Iyengar & Thomson       Expires 11 December 2020              [Page 122]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -6829,7 +6885,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 122]
+Iyengar & Thomson       Expires 11 December 2020              [Page 123]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -6885,7 +6941,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 123]
+Iyengar & Thomson       Expires 11 December 2020              [Page 124]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -6941,7 +6997,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 124]
+Iyengar & Thomson       Expires 11 December 2020              [Page 125]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -6997,7 +7053,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 125]
+Iyengar & Thomson       Expires 11 December 2020              [Page 126]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -7053,7 +7109,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 126]
+Iyengar & Thomson       Expires 11 December 2020              [Page 127]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -7109,7 +7165,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 127]
+Iyengar & Thomson       Expires 11 December 2020              [Page 128]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -7165,7 +7221,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 128]
+Iyengar & Thomson       Expires 11 December 2020              [Page 129]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -7221,7 +7277,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 129]
+Iyengar & Thomson       Expires 11 December 2020              [Page 130]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -7277,7 +7333,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 130]
+Iyengar & Thomson       Expires 11 December 2020              [Page 131]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -7333,7 +7389,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 131]
+Iyengar & Thomson       Expires 11 December 2020              [Page 132]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -7389,7 +7445,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 132]
+Iyengar & Thomson       Expires 11 December 2020              [Page 133]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -7445,7 +7501,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 133]
+Iyengar & Thomson       Expires 11 December 2020              [Page 134]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -7501,7 +7557,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 134]
+Iyengar & Thomson       Expires 11 December 2020              [Page 135]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -7557,7 +7613,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 135]
+Iyengar & Thomson       Expires 11 December 2020              [Page 136]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -7613,7 +7669,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 136]
+Iyengar & Thomson       Expires 11 December 2020              [Page 137]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -7669,7 +7725,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 137]
+Iyengar & Thomson       Expires 11 December 2020              [Page 138]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -7725,7 +7781,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 138]
+Iyengar & Thomson       Expires 11 December 2020              [Page 139]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -7781,7 +7837,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 139]
+Iyengar & Thomson       Expires 11 December 2020              [Page 140]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -7822,10 +7878,10 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    interfere with existing connections.
 
    Once a connection is established QUIC endpoints might accept some
-   unauthenticated ICMP packets (see Section 14.2), but the use of these
-   packets is extremely limited.  The only other type of packet that an
-   endpoint might accept is a stateless reset (Section 10.4) which
-   relies on the token being kept secret until it is used.
+   unauthenticated ICMP packets (see Section 14.1.1), but the use of
+   these packets is extremely limited.  The only other type of packet
+   that an endpoint might accept is a stateless reset (Section 10.4)
+   which relies on the token being kept secret until it is used.
 
    During the creation of a connection, QUIC only provides protection
    against attack from off the network path.  All QUIC packets contain
@@ -7837,7 +7893,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 140]
+Iyengar & Thomson       Expires 11 December 2020              [Page 141]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -7893,7 +7949,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 141]
+Iyengar & Thomson       Expires 11 December 2020              [Page 142]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -7949,7 +8005,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 142]
+Iyengar & Thomson       Expires 11 December 2020              [Page 143]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -8005,7 +8061,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 143]
+Iyengar & Thomson       Expires 11 December 2020              [Page 144]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -8061,7 +8117,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 144]
+Iyengar & Thomson       Expires 11 December 2020              [Page 145]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -8117,7 +8173,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 145]
+Iyengar & Thomson       Expires 11 December 2020              [Page 146]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -8173,7 +8229,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 146]
+Iyengar & Thomson       Expires 11 December 2020              [Page 147]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -8229,7 +8285,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 147]
+Iyengar & Thomson       Expires 11 December 2020              [Page 148]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -8285,7 +8341,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 148]
+Iyengar & Thomson       Expires 11 December 2020              [Page 149]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -8341,7 +8397,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 149]
+Iyengar & Thomson       Expires 11 December 2020              [Page 150]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -8397,7 +8453,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 150]
+Iyengar & Thomson       Expires 11 December 2020              [Page 151]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -8453,7 +8509,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 151]
+Iyengar & Thomson       Expires 11 December 2020              [Page 152]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -8509,7 +8565,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 152]
+Iyengar & Thomson       Expires 11 December 2020              [Page 153]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -8565,7 +8621,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 153]
+Iyengar & Thomson       Expires 11 December 2020              [Page 154]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -8621,7 +8677,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 154]
+Iyengar & Thomson       Expires 11 December 2020              [Page 155]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -8677,7 +8733,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 155]
+Iyengar & Thomson       Expires 11 December 2020              [Page 156]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -8733,7 +8789,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 156]
+Iyengar & Thomson       Expires 11 December 2020              [Page 157]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -8789,7 +8845,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 157]
+Iyengar & Thomson       Expires 11 December 2020              [Page 158]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -8845,7 +8901,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 158]
+Iyengar & Thomson       Expires 11 December 2020              [Page 159]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -8901,7 +8957,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 159]
+Iyengar & Thomson       Expires 11 December 2020              [Page 160]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -8957,7 +9013,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 160]
+Iyengar & Thomson       Expires 11 December 2020              [Page 161]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -9013,7 +9069,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 161]
+Iyengar & Thomson       Expires 11 December 2020              [Page 162]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -9069,7 +9125,7 @@ Appendix A.  Sample Packet Number Decoding Algorithm
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 162]
+Iyengar & Thomson       Expires 11 December 2020              [Page 163]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -9125,7 +9181,7 @@ Appendix B.  Sample ECN Validation Algorithm
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 163]
+Iyengar & Thomson       Expires 11 December 2020              [Page 164]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -9181,7 +9237,7 @@ C.1.  Since draft-ietf-quic-transport-27
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 164]
+Iyengar & Thomson       Expires 11 December 2020              [Page 165]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -9237,7 +9293,7 @@ C.3.  Since draft-ietf-quic-transport-25
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 165]
+Iyengar & Thomson       Expires 11 December 2020              [Page 166]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -9293,7 +9349,7 @@ C.4.  Since draft-ietf-quic-transport-24
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 166]
+Iyengar & Thomson       Expires 11 December 2020              [Page 167]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -9349,7 +9405,7 @@ C.6.  Since draft-ietf-quic-transport-22
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 167]
+Iyengar & Thomson       Expires 11 December 2020              [Page 168]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -9405,7 +9461,7 @@ C.7.  Since draft-ietf-quic-transport-21
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 168]
+Iyengar & Thomson       Expires 11 December 2020              [Page 169]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -9461,7 +9517,7 @@ C.8.  Since draft-ietf-quic-transport-20
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 169]
+Iyengar & Thomson       Expires 11 December 2020              [Page 170]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -9517,7 +9573,7 @@ C.11.  Since draft-ietf-quic-transport-17
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 170]
+Iyengar & Thomson       Expires 11 December 2020              [Page 171]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -9573,7 +9629,7 @@ C.12.  Since draft-ietf-quic-transport-16
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 171]
+Iyengar & Thomson       Expires 11 December 2020              [Page 172]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -9629,7 +9685,7 @@ C.13.  Since draft-ietf-quic-transport-15
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 172]
+Iyengar & Thomson       Expires 11 December 2020              [Page 173]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -9685,7 +9741,7 @@ C.15.  Since draft-ietf-quic-transport-13
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 173]
+Iyengar & Thomson       Expires 11 December 2020              [Page 174]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -9741,7 +9797,7 @@ C.16.  Since draft-ietf-quic-transport-12
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 174]
+Iyengar & Thomson       Expires 11 December 2020              [Page 175]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -9797,7 +9853,7 @@ C.18.  Since draft-ietf-quic-transport-10
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 175]
+Iyengar & Thomson       Expires 11 December 2020              [Page 176]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -9853,7 +9909,7 @@ C.20.  Since draft-ietf-quic-transport-08
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 176]
+Iyengar & Thomson       Expires 11 December 2020              [Page 177]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -9909,7 +9965,7 @@ C.21.  Since draft-ietf-quic-transport-07
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 177]
+Iyengar & Thomson       Expires 11 December 2020              [Page 178]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -9965,7 +10021,7 @@ C.24.  Since draft-ietf-quic-transport-04
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 178]
+Iyengar & Thomson       Expires 11 December 2020              [Page 179]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -10021,7 +10077,7 @@ C.26.  Since draft-ietf-quic-transport-02
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 179]
+Iyengar & Thomson       Expires 11 December 2020              [Page 180]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -10077,7 +10133,7 @@ C.27.  Since draft-ietf-quic-transport-01
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 180]
+Iyengar & Thomson       Expires 11 December 2020              [Page 181]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -10133,7 +10189,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 181]
+Iyengar & Thomson       Expires 11 December 2020              [Page 182]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -10189,7 +10245,7 @@ C.29.  Since draft-hamilton-quic-transport-protocol-01
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 182]
+Iyengar & Thomson       Expires 11 December 2020              [Page 183]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -10245,7 +10301,7 @@ Contributors
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 183]
+Iyengar & Thomson       Expires 11 December 2020              [Page 184]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
@@ -10301,4 +10357,4 @@ Authors' Addresses
 
 
 
-Iyengar & Thomson       Expires 11 December 2020              [Page 184]
+Iyengar & Thomson       Expires 11 December 2020              [Page 185]
