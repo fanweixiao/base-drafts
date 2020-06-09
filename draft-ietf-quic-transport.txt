@@ -5130,7 +5130,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
    To reduce the chances of misinterpreting congestive loss as packets
    dropped by a faulty network element, an endpoint could set the ECT(0)
-   codepoint in the first ten outgoing packets on a path, or for a
+   codepoint for only the first ten outgoing packets on a path, or for a
    period of three RTTs, whichever occurs first.
 
    Implementations MAY experiment with and use other strategies for use
@@ -6512,8 +6512,9 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
       This limit does act as an additional constraint on datagram size
       in the same way as the path MTU, but it is a property of the
-      endpoint and not the path.  It is expected that this is the space
-      an endpoint dedicates to holding incoming packets.
+      endpoint and not the path; see Section 14.  It is expected that
+      this is the space an endpoint dedicates to holding incoming
+      packets.
 
    initial_max_data (0x04):  The initial maximum data parameter is an
       integer value that contains the initial value for the maximum
@@ -6541,11 +6542,10 @@ Internet-Draft           QUIC Transport Protocol               June 2020
       to streams with the least significant two bits set to 0x0.
 
    initial_max_stream_data_uni (0x07):  This parameter is an integer
-
-
-
-
-
+      value specifying the initial flow control limit for unidirectional
+      streams.  This limit applies to newly created unidirectional
+      streams opened by the endpoint that receives the transport
+      parameter.  In client transport parameters, this applies to
 
 
 
@@ -6554,10 +6554,6 @@ Iyengar & Thomson       Expires 11 December 2020              [Page 117]
 Internet-Draft           QUIC Transport Protocol               June 2020
 
 
-      value specifying the initial flow control limit for unidirectional
-      streams.  This limit applies to newly created unidirectional
-      streams opened by the endpoint that receives the transport
-      parameter.  In client transport parameters, this applies to
       streams with an identifier with the least significant two bits set
       to 0x3; in server transport parameters, this applies to streams
       with the least significant two bits set to 0x2.
@@ -6603,6 +6599,10 @@ Internet-Draft           QUIC Transport Protocol               June 2020
       has acted on a preferred_address transport parameter.  This
       parameter is a zero-length value.
 
+   preferred_address (0x0d):  The server's preferred address is used to
+
+
+
 
 
 Iyengar & Thomson       Expires 11 December 2020              [Page 118]
@@ -6610,7 +6610,6 @@ Iyengar & Thomson       Expires 11 December 2020              [Page 118]
 Internet-Draft           QUIC Transport Protocol               June 2020
 
 
-   preferred_address (0x0d):  The server's preferred address is used to
       effect a change in server address at the end of the handshake, as
       described in Section 9.6.  The format of this transport parameter
       is shown in Figure 21.  This transport parameter is only sent by a
@@ -6648,6 +6647,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
                     Figure 21: Preferred Address format
 
    active_connection_id_limit (0x0e):  The active connection ID limit is
+
 
 
 
