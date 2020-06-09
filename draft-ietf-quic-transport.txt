@@ -5130,7 +5130,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
    To reduce the chances of misinterpreting congestive loss as packets
    dropped by a faulty network element, an endpoint could set the ECT(0)
-   codepoint for only the first ten outgoing packets on a path, or for a
+   codepoint in the first ten outgoing packets on a path, or for a
    period of three RTTs, whichever occurs first.
 
    Implementations MAY experiment with and use other strategies for use
