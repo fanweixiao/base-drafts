@@ -103,7 +103,7 @@ Table of Contents
    6.  Version Negotiation . . . . . . . . . . . . . . . . . . . . .  35
      6.1.  Sending Version Negotiation Packets . . . . . . . . . . .  36
      6.2.  Handling Version Negotiation Packets  . . . . . . . . . .  36
-       6.2.1.  Version Negotiation Between Draft Versions  . . . . .  36
+       6.2.1.  Version Negotiation Between Draft Versions  . . . . .  37
      6.3.  Using Reserved Versions . . . . . . . . . . . . . . . . .  37
    7.  Cryptographic and Transport Handshake . . . . . . . . . . . .  37
 
@@ -1834,12 +1834,12 @@ Internet-Draft           QUIC Transport Protocol               June 2020
       could choose not to use the preferred address.
 
    A server in a deployment that does not implement a solution to
-   maintain connection continuity during connection migration SHOULD
-   disallow migration using the disable_active_migration transport
-   parameter.
-
-   Server deployments that use this simple form of load balancing MUST
-   avoid the creation of a stateless reset oracle; see Section 21.9.
+   maintain connection continuity when the client address changes SHOULD
+   indicate migration is not supported using the
+   disable_active_migration transport parameter.  The
+   disable_active_migration transport parameter does not prohibit
+   connection migration after a client has acted on a preferred_address
+   transport parameter.
 
 
 
@@ -1849,6 +1849,9 @@ Iyengar & Thomson       Expires 11 December 2020               [Page 33]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
+
+   Server deployments that use this simple form of load balancing MUST
+   avoid the creation of a stateless reset oracle; see Section 21.9.
 
 5.3.  Life of a QUIC Connection
 
@@ -1895,9 +1898,6 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
    When implementing the client role, applications need to be able to:
 
-   *  open a connection, which begins the exchange described in
-      Section 7;
-
 
 
 
@@ -1905,6 +1905,9 @@ Iyengar & Thomson       Expires 11 December 2020               [Page 34]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
+
+   *  open a connection, which begins the exchange described in
+      Section 7;
 
    *  enable 0-RTT when available; and
 
@@ -1951,9 +1954,6 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    The size of the first packet sent by a client will determine whether
    a server sends a Version Negotiation packet.  Clients that support
    multiple QUIC versions SHOULD pad the first packet they send to the
-   largest of the minimum packet sizes across all versions they support.
-   This ensures that the server responds if there is a mutually
-   supported version.
 
 
 
@@ -1961,6 +1961,10 @@ Iyengar & Thomson       Expires 11 December 2020               [Page 35]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
+
+   largest of the minimum packet sizes across all versions they support.
+   This ensures that the server responds if there is a mutually
+   supported version.
 
 6.1.  Sending Version Negotiation Packets
 
@@ -2004,10 +2008,6 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    future versions of QUIC.  In particular, that future work will ensure
    robustness against version downgrade attacks; see Section 21.10.
 
-6.2.1.  Version Negotiation Between Draft Versions
-
-   [[RFC editor: please remove this section before publication.]]
-
 
 
 
@@ -2017,6 +2017,10 @@ Iyengar & Thomson       Expires 11 December 2020               [Page 36]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
+
+6.2.1.  Version Negotiation Between Draft Versions
+
+   [[RFC editor: please remove this section before publication.]]
 
    When a draft implementation receives a Version Negotiation packet, it
    MAY use it to attempt a new connection with one of the versions
@@ -2061,10 +2065,6 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    QUIC version number could indicate that a different cryptographic
    handshake protocol is in use.
 
-   QUIC provides reliable, ordered delivery of the cryptographic
-   handshake data.  QUIC packet protection is used to encrypt as much of
-   the handshake protocol as possible.  The cryptographic handshake MUST
-   provide the following properties:
 
 
 
@@ -2073,6 +2073,11 @@ Iyengar & Thomson       Expires 11 December 2020               [Page 37]
 
 Internet-Draft           QUIC Transport Protocol               June 2020
 
+
+   QUIC provides reliable, ordered delivery of the cryptographic
+   handshake data.  QUIC packet protection is used to encrypt as much of
+   the handshake protocol as possible.  The cryptographic handshake MUST
+   provide the following properties:
 
    *  authenticated key exchange, where
 
@@ -2117,11 +2122,6 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    handshake is used to agree on cryptographic keys.  The cryptographic
    handshake is carried in Initial (Section 17.2.2) and Handshake
    (Section 17.2.4) packets.
-
-
-
-
-
 
 
 
@@ -3031,16 +3031,17 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    connection migration before the handshake is confirmed, as defined in
    section 4.1.2 of [QUIC-TLS].
 
-   An endpoint also MUST NOT send packets from a different local
-   address, actively initiating migration, if the peer sent the
-   disable_active_migration transport parameter during the handshake.
-   An endpoint which has sent this transport parameter, but detects that
-   a peer has nonetheless migrated to a different network MUST either
-   drop the incoming packets on that path without generating a stateless
-   reset or proceed with path validation and allow the peer to migrate.
-   Generating a stateless reset or closing the connection would allow
-   third parties in the network to cause connections to close by
-   spoofing or otherwise manipulating observed traffic.
+   If the peer sent the disable_active_migration transport parameter, an
+   endpoint also MUST NOT send packets (including probing packets; see
+   Section 9.1) from a different local address to the address the peer
+   used during the handshake.  An endpoint that has sent this transport
+   parameter, but detects that a peer has nonetheless migrated to a
+   different remote address MUST either drop the incoming packets on
+   that path without generating a stateless reset or proceed with path
+   validation and allow the peer to migrate.  Generating a stateless
+   reset or closing the connection would allow third parties in the
+   network to cause connections to close by spoofing or otherwise
+   manipulating observed traffic.
 
    Not all changes of peer address are intentional, or active,
    migrations.  The peer could experience NAT rebinding: a change of
@@ -3070,7 +3071,6 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    that the new path is not usable for this connection.  Failure to
    validate a path does not cause the connection to end unless there are
    no valid alternative paths available.
-
 
 
 
@@ -5130,7 +5130,7 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
    To reduce the chances of misinterpreting congestive loss as packets
    dropped by a faulty network element, an endpoint could set the ECT(0)
-   codepoint in the first ten outgoing packets on a path, or for a
+   codepoint for only the first ten outgoing packets on a path, or for a
    period of three RTTs, whichever occurs first.
 
    Implementations MAY experiment with and use other strategies for use
@@ -6595,13 +6595,13 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
    disable_active_migration (0x0c):  The disable active migration
       transport parameter is included if the endpoint does not support
-      active connection migration (Section 9).  Peers of an endpoint
-      that sets this transport parameter MUST NOT send any packets,
-      including probing packets (Section 9.1), from a local address or
-      port other than that used to perform the handshake.  This
+      active connection migration (Section 9) on the address being used
+      during the handshake.  When a peer sets this transport parameter,
+      an endpoint MUST NOT use a new local address when sending to the
+      address that the peer used during the handshake.  This transport
+      parameter does not prohibit connection migration after a client
+      has acted on a preferred_address transport parameter.  This
       parameter is a zero-length value.
-
-   preferred_address (0x0d):  The server's preferred address is used to
 
 
 
@@ -6610,6 +6610,7 @@ Iyengar & Thomson       Expires 11 December 2020              [Page 118]
 Internet-Draft           QUIC Transport Protocol               June 2020
 
 
+   preferred_address (0x0d):  The server's preferred address is used to
       effect a change in server address at the end of the handshake, as
       described in Section 9.6.  The format of this transport parameter
       is shown in Figure 21.  This transport parameter is only sent by a
@@ -6647,7 +6648,6 @@ Internet-Draft           QUIC Transport Protocol               June 2020
                     Figure 21: Preferred Address format
 
    active_connection_id_limit (0x0e):  The active connection ID limit is
-
 
 
 
