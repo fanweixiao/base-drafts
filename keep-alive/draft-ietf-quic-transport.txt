@@ -3712,15 +3712,14 @@ Internet-Draft           QUIC Transport Protocol               June 2020
 
    An implementation of QUIC might provide applications with an option
    to defer an idle timeout.  This facility could be used when the
-   application wishes to avoid the loss of state that is bound to an
-   open connection, but does not expect to exchange application data for
-   some time.  With this option, an endpoint could send a PING frame
-   periodically to defer an idle timeout; see Section 19.2.
+   application wishes to avoid losing state that has been associated
+   with an open connection, but does not expect to exchange application
+   data for some time.  With this option, an endpoint could send a PING
+   frame periodically to defer an idle timeout; see Section 19.2.
 
    Application protocols that use QUIC SHOULD provide guidance on when
-   deferring an idle timeout is appropriate.  Uncoordinated or
-   unnecessary sending of PING frames could have a detrimental effect on
-   performance.
+   deferring an idle timeout is appropriate.  Unnecessary sending of
+   PING frames could have a detrimental effect on performance.
 
    A connection will time out if no packets are sent or received for a
    period longer than the time negotiated using the max_idle_timeout
@@ -3740,20 +3739,6 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    After sending a CONNECTION_CLOSE frame, an endpoint immediately
    enters the closing state.
 
-
-
-
-
-
-
-
-
-
-Iyengar & Thomson       Expires 11 December 2020               [Page 67]
-
-Internet-Draft           QUIC Transport Protocol               June 2020
-
-
    During the closing period, an endpoint that sends a CONNECTION_CLOSE
    frame SHOULD respond to any incoming packet that can be decrypted
    with another packet containing a CONNECTION_CLOSE frame.  Such an
@@ -3761,6 +3746,13 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    CONNECTION_CLOSE frame.  For instance, an endpoint could wait for a
    progressively increasing number of received packets or amount of time
    before responding to a received packet.
+
+
+
+Iyengar & Thomson       Expires 11 December 2020               [Page 67]
+
+Internet-Draft           QUIC Transport Protocol               June 2020
+
 
    An endpoint is allowed to drop the packet protection keys when
    entering the closing period (Section 10.1) and send a packet
@@ -3802,6 +3794,14 @@ Internet-Draft           QUIC Transport Protocol               June 2020
    requests that the connection be closed.  The application protocol can
    use a CONNECTION_CLOSE frame with an appropriate error code to signal
    closure.
+
+
+
+
+
+
+
+
 
 
 
